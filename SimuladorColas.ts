@@ -1,5 +1,6 @@
 import { Empleado } from "./Empleado";
 import { Evento } from "./Evento";
+import { Pasajero } from "./Pasajero";
 
 export class SimuladorColas {
   private mediaTiempoEntreLlegadas: number = 3.4474;
@@ -11,7 +12,7 @@ export class SimuladorColas {
     ["C", 1]
   ]);
 
-  public async simular(cantEventos: number, indiceDesde: number): void {
+  public simular(cantEventos: number, indiceDesde: number): {
     this.matrizEstado = [];
 
     // Definimos el rango de filas que vamos a mostrar.
@@ -57,19 +58,19 @@ export class SimuladorColas {
 
     // Empleado facturación.
     let empleadoFacturacion = new Empleado();
-    let colaFacturacion: number = 0;
+    let colaFacturacion: Pasajero[] = [];
 
     // Empleado Venta de billetes.
     let empleadoVentaBillete = new Empleado();
-    let colaVentaBillete: number = 0;
+    let colaVentaBillete: Pasajero[] = [];
 
     // Empleado Chequeo de billetes.
     let empleadoChequeoBillete = new Empleado();
-    let colaChequeoBillete: number = 0;
+    let colaChequeoBillete: Pasajero[] = [];
 
     // Agente control de metales.
     let empleadoControlMetales = new Empleado();
-    let colaControlMetales: number = 0;
+    let colaControlMetales: Pasajero[] = [];
 
     // Métricas.
     let totalPasajerosA: number = 0;
@@ -83,17 +84,50 @@ export class SimuladorColas {
     let acuTiempoEsperaColaControl: number = 0;
     let totalPasajerosEnColaControl: number = 0;
 
-
     for (let i: number = 0; i < cantEventos; i++) {
-
-      // Llegada de pasajero.
-      rndLlegada = Math.random();
-      tiempoEntreLlegadas = this.getTiempoEntreLlegadas(rndLlegada);
-      proximaLlegada = reloj + tiempoEntreLlegadas;
-
-      // Inicio de simulación.
+      // Determinamos el tipo de evento.
       if (i == 0) {
         tipoEvento = Evento.INICIO_SIMULACION;
+      }
+      else if (i == cantEventos - 1) {
+        tipoEvento = Evento.FIN_SIMULACION;
+      }
+      else {
+        tipoEvento = this.getSiguienteEvento([
+          proximaLlegada,
+          finFacturacion,
+          finVentaBillete,
+          finChequeoBillete,
+          finControlMetales,
+          finPaseEntreZonas
+        ]);
+      }
+
+      switch (tipoEvento) {
+        // Inicio de la simulación.
+        case Evento.INICIO_SIMULACION:
+          rndLlegada = Math.random();
+          tiempoEntreLlegadas = this.getTiempoEntreLlegadas(rndLlegada);
+          proximaLlegada = reloj + tiempoEntreLlegadas;
+          break;
+
+        // Llegada de pasajero.
+        case Evento.LLEGADA_PASAJERO:
+
+          break;
+
+        case Evento.FIN_FACTURACION:
+          break;
+        case Evento.FIN_VENTA_BILLETE:
+          break;
+        case Evento.FIN_CHEQUEO_BILLETE:
+          break;
+        case Evento.FIN_CONTROL_METALES:
+          break;
+        case Evento.FIN_PASO_ENTRE_ZONAS:
+          break;
+        case Evento.FIN_SIMULACION:
+          break;  
       }
 
       evento.push(
@@ -111,6 +145,10 @@ export class SimuladorColas {
 
         rndVentaBillete,
         tiempoVentaBillete,
+        finVentaBillete,
+
+        rndChequeoBillete,
+        tiempoChequeoBillete,
         finChequeoBillete,
 
         rndControlMetales,
@@ -121,14 +159,34 @@ export class SimuladorColas {
         tiempoPaseEntreZonas,
         finPaseEntreZonas,
 
-        
+        empleadoFacturacion.getEstado(),
+        colaFacturacion.length,
 
+        empleadoVentaBillete.getEstado(),
+        colaVentaBillete.length,
+
+        empleadoChequeoBillete.getEstado(),
+        colaChequeoBillete.length,
+
+        empleadoControlMetales.getEstado(),
+        colaControlMetales.length,
+
+        totalPasajerosA,
+        totalPasajerosB,
+        totalPasajerosC,
+        totalPasajeros,
+        acuTiempoPasajeros,
+        acuTiempoOciosoFacturacion,
+        cantPasajerosAtentidosPorVenta,
+        cantMaxPasajerosEnCola,
+        acuTiempoEsperaColaControl,
+        totalPasajerosEnColaControl
         );
-
-
-
-      
     }
+  }
+
+  public getMatrizEstado(): any[][] {
+    return this.matrizEstado;
   }
 
   public getTiempoEntreLlegadas(rndLlegada: number): number {
@@ -136,7 +194,12 @@ export class SimuladorColas {
     return -this.mediaTiempoEntreLlegadas * Math.log(1 - rndLlegada);
   }
 
-
+  public getSiguienteEvento(tiempoEventos: number[]): Evento {
+    let menor: number = Math.min(...tiempoEventos);
+    for (let i: number = 0; i < tiempoEventos.length; i++) {
+      if (tiempoEventos[i] === menor)
+        return Evento[Evento[i+1]];
+    }
+    return -1;
+  }
 }
-
-

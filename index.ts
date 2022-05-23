@@ -1,4 +1,8 @@
 // Import stylesheets
+import { SimuladorColas } from './SimuladorColas';
 import './style.css';
 
-let hora: Date = new Date();
+const simulador: SimuladorColas = new SimuladorColas();
+await simulador.simular(2, 1);
+
+console.log(simulador.getMatrizEstado())
