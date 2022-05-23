@@ -1,1 +1,115 @@
-<div id="app"></div>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TP5 Simulación</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css"/>
+    <div id="app"></div>
+  </head>
+
+  <body>
+    <h1 class="text-center">Trabajo Práctico N°5 de Simulación</h1>
+    <h2 class="text-center">Modelos de Simulación Dinámicos</h2>
+
+    <form>
+      <div class="row mb-3 mx-3">
+        <div class="col-md">
+          <label class="form-label" for="txtCantNros">Cantidad de eventos(N): </label>
+          <input
+            type="number"
+            class="form-control form-control-sm mb-3 tamanio"
+            id="txtCantNros"
+            name="txtCantNros"
+          />
+        </div>
+
+        <div class="col-md">
+          <label class="form-label" for="txtIndiceDesde">Hora desde:</label>
+          <input
+            type="number"
+            class="form-control form-control-sm mb-3 tamanio"
+            id="txtIndiceDesde"
+            name="txtIndiceDesde"
+          />
+        </div>
+
+        <div class="col-md">
+          <label class="form-label" for="cboJuntarVentanilla">JuntarVentanillas:</label>
+          <select class="form-select mb-3 tamanio" id="cboJuntarVentanilla">
+            <option value="0" selected>Seleccione una opcion...</option>
+            <option value="1">Si</option>
+            <option value="2">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row mb-3 mx-3">
+        <button
+          class="btn btn-dark mb-2 mx-2 form-control form-control-sm"
+          id="btnSimular"
+          type="button"
+          name="btnSimular">
+          <span class="spinner-border spinner-border-sm" role="status" id="spinnerSimular" hidden></span>
+          Simular
+        </button>
+      </div>
+
+      <div id="divTablaSimulacionDinamica">
+        <div class="modal fade" tabindex="-1" role="dialog" id="spinnerModal">
+          <div class="modal-dialog modal-dialog-centered text-center" role="document">
+              <span class="fa fa-spinner fa-spin fa-3x w-100"></span>
+          </div>
+        </div>
+
+        <div class="table-responsive scrollable row mb-3 mx-3">
+          <table id="tablaSimulacionDinamica" class="table table-hover mx-3 mb-3">
+            <thead>
+              <tr>
+                <td>RND</td>
+                <td>TiempoEntreLlegadas</td>
+                <td>ProximaLlegada</td>
+                <td>RND</td>
+                <td>TiempoFacturacion</td>
+                <td>FinFacturacion</td>
+                <td>RND</td>
+                <td>Tiempo Venta</td>
+                <td>Fin Venta</td>
+                <td>RND</td>
+                <td>TiempoChequeo</td>
+                <td>FinChequeo</td>
+                <td>RND</td>
+                <td>TiempoControl</td>
+                <td>FinControl</td>
+                <td>RND</td>
+                <td>TiempoEntreZonas</td>
+                <td>FinEntreZonas</td>
+                <td>EstadoFacturacion</td>
+                <td>ColaFacturacion</td>
+                <td>EstadoVenta</td>
+                <td>ColaVenta</td>
+                <td>EstadoChequeo</td>
+                <td>ColaChequeo</td>
+                <td>EstadoControl</td>
+                <td>ColaControl</td>
+                <td>CantPasajeros A</td>
+                <td>ContadorPasajeros</td>
+                <td>AcumTiempoPasajeroSistema</td>
+                <td>AcumTiempoOciosoEmpFact</td>
+                <td>CantAtendidosVenta</td>
+                <td>LongitudMaxCola</td>
+                <td>AcumTiempoEsperaControl</td>
+                <td>ContPasajerosColaControl</td>
+                <!-- Agregar las columnas correspondientes a los pasajeros -->
+              </tr>
+            </thead>
+
+            <tbody>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
