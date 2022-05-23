@@ -3,6 +3,10 @@ import { EstadoEmpleado } from "./EstadoEmpleado";
 export class Empleado {
   private estado: EstadoEmpleado;
 
+  public Empleado() {
+    this.estado = EstadoEmpleado.LIBRE;
+  }
+
   public libre(): void {
     this.estado = EstadoEmpleado.LIBRE;
   }
