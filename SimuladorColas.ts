@@ -4,13 +4,28 @@ import { Pasajero } from "./Pasajero";
 
 export class SimuladorColas {
   private mediaTiempoEntreLlegadas: number = 3.4474;
+  
+  private aTiempoFacturacion: number = 2;
+  private bTiempoFacturacion: number = 5;
+
+  private mediaTiempoVentaBilletes: number = 6.858;
+
+  private mediaTiempoChequeoBilletes: number = 1;
+  private desviacionTiempoChequeoBilletes: number = 0.5;
+  
+  private mediaTiempoControlMetales: number = 2;
+
+  private mediaTiempoPasoEntreZonas: number = 2;
+
   private matrizEstado: any[][];
 
-  private tipoPasajero: Map<string, number> = new Map<string, number>([
+  private tiposPasajeros: Map<string, number> = new Map<string, number>([
     ["A", 0.3],
     ["B", 0.45],
     ["C", 1]
   ]);
+
+  private probTiposPasajeros: number[] = [0.3, 0.45, 1];
 
   public async simular(cantEventos: number, indiceDesde: number): Promise<void> {
     this.matrizEstado = [];
@@ -191,11 +206,6 @@ export class SimuladorColas {
     return this.matrizEstado;
   }
 
-  public getTiempoEntreLlegadas(rndLlegada: number): number {
-    // Generamos el tiempo entre llegadas, que tiene distribución exponencial.
-    return -this.mediaTiempoEntreLlegadas * Math.log(1 - rndLlegada);
-  }
-
   public getSiguienteEvento(tiempoEventos: number[]): Evento {
     let menor: number = Math.min(...tiempoEventos);
     for (let i: number = 0; i < tiempoEventos.length; i++) {
@@ -203,5 +213,33 @@ export class SimuladorColas {
         return Evento[Evento[i+1]];
     }
     return -1;
+  }
+
+  // Cálculo del tiempo entre llegadas, que tiene distribución exponencial.
+  public getTiempoEntreLlegadas(rndLlegada: number): number {
+    return -this.mediaTiempoEntreLlegadas * Math.log(1 - rndLlegada);
+  }
+
+  // Obtención del tipo de pasajero según la probabilidad asociada.
+  public getTipoPasajero(probTipoPasajero: number): string {
+    const tipos: string[] = ["A", "B", "C"];
+    for (let i: number = 0; i < this.probTiposPasajeros.length; i++) {
+      if (probTipoPasajero < this.probTiposPasajeros[i])
+        return tipos[i];
+    }
+  }
+
+  // Cálculo del tiempo de facturación, que tiene distribución uniforme.
+  public getTiempoFacturacion(rndTiempoFacturacion: number): number {
+    return this.aTiempoFacturacion + rndTiempoFacturacion * (this.bTiempoFacturacion - this.aTiempoFacturacion);
+  }
+
+  // Cálculo del tiempo de venta de billete, que tiene distribución exponencial.
+  public getTiempoVentaBillete(rndTiempoVenta: number): number {
+    return -this.mediaTiempoVentaBilletes * Math.log(1 - rndTiempoVenta);
+  }
+
+  public getTiempoChequeoBillete(): number {
+    
   }
 }
