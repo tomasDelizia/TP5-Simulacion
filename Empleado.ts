@@ -3,7 +3,7 @@ import { EstadoEmpleado } from "./EstadoEmpleado";
 export class Empleado {
   private estado: EstadoEmpleado;
 
-  public Empleado() {
+  constructor() {
     this.estado = EstadoEmpleado.LIBRE;
   }
 
@@ -15,7 +15,7 @@ export class Empleado {
     this.estado = EstadoEmpleado.OCUPADO;
   }
 
-  public getEstado(): EstadoEmpleado {
-    return this.estado;
+  public getEstado(): string {
+    return EstadoEmpleado[this.estado];
   }
 }

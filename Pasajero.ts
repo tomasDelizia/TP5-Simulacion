@@ -6,7 +6,7 @@ export class Pasajero {
   private minutoLlegada: number;
   private estado: EstadoPasajero;
 
-  public Pasajero(id: number, tipoPasajero: string, minutoLlegada: number) {
+  public constructor(id: number, tipoPasajero: string, minutoLlegada: number) {
     this.id = id;
     this.tipoPasajero = tipoPasajero;
     this.minutoLlegada = minutoLlegada;

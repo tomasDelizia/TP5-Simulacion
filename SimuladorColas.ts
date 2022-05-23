@@ -12,7 +12,7 @@ export class SimuladorColas {
     ["C", 1]
   ]);
 
-  public simular(cantEventos: number, indiceDesde: number): {
+  public async simular(cantEventos: number, indiceDesde: number): Promise<void> {
     this.matrizEstado = [];
 
     // Definimos el rango de filas que vamos a mostrar.
@@ -183,6 +183,8 @@ export class SimuladorColas {
         totalPasajerosEnColaControl
         );
     }
+
+    this.matrizEstado.push(evento);
   }
 
   public getMatrizEstado(): any[][] {
