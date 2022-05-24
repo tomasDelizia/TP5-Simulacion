@@ -12,7 +12,7 @@ export class Pasajero {
     this.minutoLlegada = minutoLlegada;
   }
 
-  public facturarEquipaje(): void {
+  public facturandoEquipaje(): void {
     this.estado = EstadoPasajero.FACTURANDO_EQUIPAJE;
   }
 
@@ -28,7 +28,7 @@ export class Pasajero {
     this.estado = EstadoPasajero.ESPERANDO_CONTROL;
   }
 
-  public comprarBillete(): void {
+  public comprandoBillete(): void {
     this.estado = EstadoPasajero.COMPRANDO_BILLETE;
   }
 
@@ -36,7 +36,7 @@ export class Pasajero {
     this.estado = EstadoPasajero.ESPERANDO_COMPRA_BILLETE;
   }
 
-  public chequearBillete(): void {
+  public chequeandoBillete(): void {
     this.estado = EstadoPasajero.CHEQUEANDO_BILLETE;
   }
 
@@ -44,8 +44,8 @@ export class Pasajero {
     this.estado = EstadoPasajero.ESPERANDO_CHEQUEO_BILLETE;
   }
 
-  public cambiarDeZona(): void {
-    this.estado = EstadoPasajero.PASANDO_ENTRE_ZONAS;
+  public pasandoAControlMetales(): void {
+    this.estado = EstadoPasajero.PASANDO_A_CONTROL_METALES;
   }
 
   public getEstado(): EstadoPasajero {

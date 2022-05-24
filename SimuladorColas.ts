@@ -88,6 +88,9 @@ export class SimuladorColas {
     let empleadoControlMetales = new Empleado();
     let colaControlMetales: Pasajero[] = [];
 
+    // Pasajeros yendo a otra zona.
+    let colaEntreZonas: Pasajero[] = [];
+
     // Métricas.
     let totalPasajerosA: number = 0;
     let totalPasajerosB: number = 0;
@@ -131,9 +134,15 @@ export class SimuladorColas {
 
         // Llegada de un pasajero.
         case Evento.LLEGADA_PASAJERO:
+          // Obtenemos el tipo de pasajero.
           let rndTipoPasajero: number = Math.random();
           let tipoPasajero: string = this.getTipoPasajero(rndTipoPasajero);
           totalPasajeros ++;
+
+          // Generamos la llegada del próximo pasajero.
+          rndLlegada = Math.random();
+          tiempoEntreLlegadas = this.getTiempoEntreLlegadas(rndLlegada);
+          proximaLlegada = reloj + tiempoEntreLlegadas;
 
           // Creamos el objeto pasajero.
           let pasajero: Pasajero = new Pasajero(
@@ -143,57 +152,124 @@ export class SimuladorColas {
           );
 
           switch (tipoPasajero) {
-            // Llega un pasajero de tipo A.
+            // Llega un pasajero de tipo A. Va primero a la ventanilla de facturación de equipaje.
             case "A":
               totalPasajerosA++;
-              if (empleadoFacturacion.estaLibre) {
+              if (empleadoFacturacion.estaLibre()) {
                 pasajero.facturarEquipaje();
                 empleadoFacturacion.ocupado();
 
+                // Generamos el tiempo de facturación.
                 rndFacturacion = Math.random();
                 tiempoFacturacion = this.getTiempoFacturacion(rndFacturacion);
                 finFacturacion = reloj + tiempoFacturacion;
               }
-              else
+              else {
                 pasajero.enEsperaFacturacion();
                 colaFacturacion.push(pasajero);
+              }
               break;
 
-            // Llega un pasajero de tipo B.
+            // Llega un pasajero de tipo B. Va primero a la ventanilla de venta.
             case "B":
               totalPasajerosB++;
-              rndVentaBillete = Math.random();
-              tiempoVentaBillete = this.getTiempoVentaBillete(rndVentaBillete);
-              finVentaBillete = reloj + tiempoVentaBillete;
+              if (empleadoVentaBillete.estaLibre()) {
+                pasajero.comprarBillete();
+                empleadoVentaBillete.ocupado();
+
+                // Generamos el tiempo de venta de billete.
+                rndVentaBillete = Math.random();
+                tiempoVentaBillete = this.getTiempoVentaBillete(rndVentaBillete);
+                finVentaBillete = reloj + tiempoVentaBillete;
+              }
+              else {
+                pasajero.enEsperaCompraBillete();
+                colaVentaBillete.push(pasajero);
+              }
               break;
 
-            // Llega un pasajero de tipo C.  
+            // Llega un pasajero de tipo C. Va primero a la ventanilla de chequeo de billetes.
             case "C":
               totalPasajerosC++;
-              rnd1ChequeoBillete = Math.random();
-              rnd1ChequeoBillete = Math.random();
-              tiempoChequeoBillete = this.getTiempoChequeoBillete(rnd1ChequeoBillete, rnd2ChequeoBillete);
-              finChequeoBillete = reloj + tiempoChequeoBillete;
+              if (empleadoChequeoBillete.estaLibre()) {
+                pasajero.chequearBillete();
+                empleadoChequeoBillete.ocupado();
+
+                // Generamos el tiempo de chequeo de billete.
+                rnd1ChequeoBillete = Math.random();
+                rnd1ChequeoBillete = Math.random();
+                tiempoChequeoBillete = this.getTiempoChequeoBillete(rnd1ChequeoBillete, rnd2ChequeoBillete);
+                finChequeoBillete = reloj + tiempoChequeoBillete;
+              }
+              else {
+                pasajero.enEsperaChequeoBilletes();
+                colaChequeoBillete.push(pasajero);
+              }
               break;
           }
           break;
 
+        // Fin de facturación de un pasajero.
         case Evento.FIN_FACTURACION:
           // Preguntamos si hay alguien en la cola.
-          if (colaFacturacion.length === 0)
+          if (colaFacturacion.length === 0) {
             empleadoFacturacion.libre();
+          }
           else {
-            let pasajeroAtendido: Pasajero = colaFacturacion.shift();
+            // El pasajero sale de la copasa a la zona de control de metales.
+            colaEntreZonas.push(colaFacturacion.shift());
+            empleadoFacturacion.ocupado();
+            pasajeroAtendido.pasandoAControlMetales();
+            
+            // Se genera el tiempo que tardará el pasajero en pasar a la zona de control de metales.
+            rndPaseEntreZonas = Math.random();
+            tiempoPaseEntreZonas = this.getTiempoPasoEntreZonas(rndPaseEntreZonas);
+            finPaseEntreZonas = reloj + tiempoPaseEntreZonas;
           }
           break;
+
+        // Fin de venta de billete a un pasajero.
         case Evento.FIN_VENTA_BILLETE:
+          // Preguntamos si hay alguien en la cola.
+          if (colaVentaBillete.length === 0)
+            empleadoVentaBillete.libre();
+          else {
+            let pasajeroAtendido: Pasajero = colaFacturacion.shift();
+            empleadoVentaBillete.ocupado();
+            
+            // Se genera el tiempo que tardará el pasajero en pasar a la siguiente zona.
+            rndPaseEntreZonas = Math.random();
+            tiempoPaseEntreZonas = this.getTiempoPasoEntreZonas(rndPaseEntreZonas);
+            finPaseEntreZonas = reloj + tiempoPaseEntreZonas;
+          }
           break;
+
+        // Fin de chequeo de billeta a un pasajero.
         case Evento.FIN_CHEQUEO_BILLETE:
+        // Preguntamos si hay alguien en la cola.
+        if (colaChequeoBillete.length === 0)
+          empleadoChequeoBillete.libre();
+        else {
+          // El pasajero pasa a la zona 
+          colaChequeoBillete.shift();
+          empleadoChequeoBillete.ocupado();
+          
+          // Se genera el tiempo que tardará el pasajero en pasar a la siguiente zona.
+          rndPaseEntreZonas = Math.random();
+          tiempoPaseEntreZonas = this.getTiempoPasoEntreZonas(rndPaseEntreZonas);
+          finPaseEntreZonas = reloj + tiempoPaseEntreZonas;
+        }
           break;
+        
+        // Fin de control de metales a un pasajero.
         case Evento.FIN_CONTROL_METALES:
           break;
+
+        // Fin de paso entre zonas de un pasajero.
         case Evento.FIN_PASO_ENTRE_ZONAS:
           break;
+
+        // Fin de simulación.
         case Evento.FIN_SIMULACION:
           break;  
       }
