@@ -473,7 +473,7 @@ export class SimuladorColas {
         totalPasajerosEnColaControl
         );
 
-      evento.concat(evento, pasajerosEnSistema);  
+      evento.concat(evento, pasajerosEnSistema);
     }
 
     this.matrizEstado.push(evento);
