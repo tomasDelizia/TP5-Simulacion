@@ -129,12 +129,13 @@ export class SimuladorColas {
           proximaLlegada = reloj + tiempoEntreLlegadas;
           break;
 
-        // Llegada de pasajero.
+        // Llegada de un pasajero.
         case Evento.LLEGADA_PASAJERO:
           let rndTipoPasajero: number = Math.random();
           let tipoPasajero: string = this.getTipoPasajero(rndTipoPasajero);
           totalPasajeros ++;
 
+          // Creamos el objeto pasajero.
           let pasajero: Pasajero = new Pasajero(
             totalPasajeros,
             tipoPasajero,
@@ -142,9 +143,11 @@ export class SimuladorColas {
           );
 
           switch (tipoPasajero) {
+            // Llega un pasajero de tipo A.
             case "A":
               totalPasajerosA++;
               if (empleadoFacturacion.estaLibre) {
+                pasajero.facturarEquipaje();
                 empleadoFacturacion.ocupado();
 
                 rndFacturacion = Math.random();
@@ -152,14 +155,19 @@ export class SimuladorColas {
                 finFacturacion = reloj + tiempoFacturacion;
               }
               else
+                pasajero.enEsperaFacturacion();
                 colaFacturacion.push(pasajero);
               break;
+
+            // Llega un pasajero de tipo B.
             case "B":
               totalPasajerosB++;
               rndVentaBillete = Math.random();
               tiempoVentaBillete = this.getTiempoVentaBillete(rndVentaBillete);
               finVentaBillete = reloj + tiempoVentaBillete;
               break;
+
+            // Llega un pasajero de tipo C.  
             case "C":
               totalPasajerosC++;
               rnd1ChequeoBillete = Math.random();
@@ -168,12 +176,15 @@ export class SimuladorColas {
               finChequeoBillete = reloj + tiempoChequeoBillete;
               break;
           }
-
-
-
           break;
 
         case Evento.FIN_FACTURACION:
+          // Preguntamos si hay alguien en la cola.
+          if (colaFacturacion.length === 0)
+            empleadoFacturacion.libre();
+          else {
+            let pasajeroAtendido: Pasajero = colaFacturacion.shift();
+          }
           break;
         case Evento.FIN_VENTA_BILLETE:
           break;
