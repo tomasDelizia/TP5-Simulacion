@@ -21,7 +21,13 @@ export module HTMLUtils {
   export function agregarFilaATabla(fila: any[], tabla: HTMLTableElement) {
   let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
   for (let i: number = 0; i < fila.length; i++) {
-    const valor: string = !(typeof fila[i] === 'undefined' || fila[i] === '') ? String(fila[i]) : '-';
+    const valor: string = !(typeof fila[i] === 'undefined' || String(fila[i]) == 'null' || fila[i] === '') ? String(fila[i]) : '-';
+    /* if (i == 5 || i == 9 || i == 11 || i == 14 || i == 20 || i == 23 || i == 26 || i == 29 || i == 32) {
+      let celda: HTMLTableDataCellElement = filaHTML.insertCell();
+      celda.style.color = "red"
+      celda.appendChild(document.createTextNode(valor));
+    }
+    */
     let celda: HTMLTableDataCellElement = filaHTML.insertCell();
     celda.appendChild(document.createTextNode(valor));
     }
@@ -34,8 +40,8 @@ export module HTMLUtils {
 
     for (let i: number = 0; i < cantPasajeros; i++) {
       let colPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
-      colPasajero.colSpan = 5;
-      colPasajero.appendChild(document.createTextNode('Pasajero N° ' + i));
+      colPasajero.colSpan = 4;
+      colPasajero.appendChild(document.createTextNode('Pasajero N° ' + i+1));
 
       let colNroPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
       colNroPasajero.appendChild(document.createTextNode('N° Pasajero'));
