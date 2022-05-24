@@ -63,65 +63,94 @@
         </div>
 
         <div class="table-responsive scrollable row mb-3 mx-3">
-          <table id="tablaSimulacionDinamica" class="table table-hover mx-3 mb-3">
+          <table id="tablaSimulacionDinamica" class="table table-hover table-bordered mx-3 mb-3">
             <thead>
               <tr>
-                <td>Nro Evento</td>
-                <td>Tipo Evento</td>
-                <td>Reloj</td>
-                <td>RND</td>
-                <td>Tiempo Entre Llegadas</td>
-                <td>Proxima Llegada</td>
-                <td>RND</td>
-                <td>Tipo Pasajero</td>
-                <td>RND</td>
-                <td>Tiempo Facturacion</td>
-                <td>Fin Facturacion</td>
-                <td>RND</td>
-                <td>Tiempo Venta</td>
-                <td>Fin Venta</td>
-                <td>RND 1</td>
-                <td>RND 2</td>
-                <td>Tiempo Chequeo</td>
-                <td>Fin Chequeo</td>
-                <td>RND</td>
-                <td>Tiempo Control</td>
-                <td>Fin Control</td>
-                <!-- Pase entre venta y facturacion -->
-                <td>RND</td>
-                <td>Tiempo Entre Zonas</td>
-                <td>Fin Entre Zonas</td>
+                <th rowspan="2">N° Evento</th>
+                <th rowspan="2">Evento</th>
+                <th rowspan="2">Reloj (min.)</th>
+                <th colspan="5">Llegada pasajero</th>
+                <th colspan="3">Facturación equipaje</th>
+                <th colspan="3">Venta billete</th>
+                <th colspan="4">Chequeo billete</th>
+                <th colspan="3">Control Metales</th>
+                <th colspan="3">Pase entre Venta y Facturación</th>
+                <th colspan="3">Pase entre Facturación y Control</th>
+                <th colspan="3">Pase entre Chequeo y Control</th>
+                <th colspan="3">Pase entre Control y Embarque</th>
+                <th colspan="2">Empleado Venta Billete</th>
+                <th colspan="2">Empleado Chequeo Billete</th>
+                <th colspan="2">Empleado Control Metales</th>
+                <th colspan="12">Métricas</th>
+              </tr>
+                
+              </tr>  
+                <!-- Tiempo entre llegadas -->
+                <th>RND Tiempo Entre Llegadas</th>
+                <th>Tiempo Entre Llegadas</th>
+                <th>Próxima Llegada</th>
+                <th>RND Tipo Pasajero</th>
+                <th>Tipo Pasajero</th>
+
+                <!-- Tiempo facturación pasajero -->
+                <th>RND Tiempo Facturación</th>
+                <th>Tiempo Facturación</th>
+                <th>Fin Facturación</th>
+
+                <!-- Tiempo venta billete -->
+                <th>RND Venta Billete</th>
+                <th>Tiempo Venta Billete</th>
+                <th>Fin Venta Billete</th>
+
+                <!-- Tiempo chequeo billete -->
+                <th>RND 1 Chequeo Billete</th>
+                <th>RND 2 Chequeo Billete</th>
+                <th>Tiempo Chequeo Billete</th>
+                <th>Fin Chequeo Billete</th>
+
+                <!-- Tiempo control metales -->
+                <th>RND Control Metales</th>
+                <th>Tiempo Control Metales</th>
+                <th>Fin Control Metales</th>
+
+                <!-- Pase de venta a facturacion -->
+                <th>RND Pase Entre Venta y Facturación</th>
+                <th>Tiempo Pase Entre Venta y Facturación</th>
+                <th>Fin Pase Entre Venta y Facturación</th>
+
                 <!-- Pase entre facturacion y control -->
-                <td>RND</td>
-                <td>Tiempo Entre Zonas</td>
-                <td>Fin Entre Zonas</td>
+                <th>RND Pase entre Facturación y Control</th>
+                <th>Tiempo Pase entre Facturación y Control</th>
+                <th>Fin Pase entre Facturación y Control</th>
+
                 <!-- Pase entre chequeo y control -->
-                <td>RND</td>
-                <td>Tiempo Entre Zonas</td>
-                <td>Fin Entre Zonas</td>
+                <th>RND Pase Entre Chequeo y Control</th>
+                <th>Tiempo Pase Entre Chequeo y Control</th>
+                <th>Fin Pase Entre Chequeo y Control</th>
+
                 <!-- Pase entre control y embarque -->
-                <td>RND</td>
-                <td>Tiempo Entre Zonas</td>
-                <td>Fin Entre Zonas</td>
-                <!-- -->
-                <td>Estado Facturacion</td>
-                <td>Cola Facturacion</td>
-                <td>Estado Venta</td>
-                <td>Cola Venta</td>
-                <td>Estado Chequeo</td>
-                <td>Cola Chequeo</td>
-                <td>Estado Control</td>
-                <td>Cola Control</td>
-                <td>Cant Pasajeros A</td>
-                <td>Cant Pasajeros B</td>
-                <td>Cant Pasajeros C</td>
-                <td>Total Pasajeros</td>
-                <td>AcumTiempoPasajeroSistema</td>
-                <td>AcumTiempoOciosoEmpFact</td>
-                <td>CantAtendidosVenta</td>
-                <td>LongitudMaxCola</td>
-                <td>AcumTiempoEsperaControl</td>
-                <td>ContPasajerosColaControl</td>
+                <th>RND Pase Entre Control y Embarque</th>
+                <th>Tiempo Pase Entre Control y Embarque</th>
+                <th>Fin Pase Entre Control y Embarque</th>
+
+                <th>Estado Facturacion</th>
+                <th>Cola Facturacion</th>
+                <th>Estado Venta</th>
+                <th>Cola Venta</th>
+                <th>Estado Chequeo</th>
+                <th>Cola Chequeo</th>
+                <th>Estado Control</th>
+                <th>Cola Control</th>
+                <th>Cant Pasajeros A</th>
+                <th>Cant Pasajeros B</th>
+                <th>Cant Pasajeros C</th>
+                <th>Total Pasajeros</th>
+                <th>AcumTiempoPasajeroSistema</th>
+                <th>AcumTiempoOciosoEmpFact</th>
+                <th>CantAtendidosVenta</th>
+                <th>LongitudMaxCola</th>
+                <th>AcumTiempoEsperaControl</th>
+                <th>ContPasajerosColaControl</th>
                 <!-- Agregar las columnas correspondientes a los pasajeros -->
               </tr>
             </thead>

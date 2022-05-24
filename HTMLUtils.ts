@@ -12,7 +12,7 @@ export module HTMLUtils {
 
   // Función que elimina todas las filas de la tabla HTML excepto los encabezados.
   export function limpiarTabla(tabla: HTMLTableElement) {
-    for (let i: number = tabla.rows.length; i > 1; i--) {
+    for (let i: number = tabla.rows.length; i > 2; i--) {
       tabla.deleteRow(i - 1);
     }
   }
@@ -30,18 +30,23 @@ export module HTMLUtils {
   // Completa los encabezados de la tabla con los datos de los pasajeros.
   export function completarEncabezadosDeTabla(cantPasajeros: number, tabla: HTMLTableElement): void {
     let encabezados: HTMLTableRowElement = tabla.rows[0];
+    let subEncabezados: HTMLTableRowElement = tabla.rows[1];
 
     for (let i: number = 0; i < cantPasajeros; i++) {
-      let colNroPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
+      let colPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
+      colPasajero.colSpan = 5;
+      colPasajero.appendChild(document.createTextNode('Pasajero N° ' + i));
+
+      let colNroPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
       colNroPasajero.appendChild(document.createTextNode('N° Pasajero'));
 
-      let colTipoPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
+      let colTipoPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
       colTipoPasajero.appendChild(document.createTextNode('Tipo Pasajero'));
       
-      let colEstadoPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
+      let colEstadoPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
       colEstadoPasajero.appendChild(document.createTextNode('Estado'));
 
-      let colMinutoLlegada: HTMLTableHeaderCellElement = encabezados.insertCell();
+      let colMinutoLlegada: HTMLTableHeaderCellElement = subEncabezados.insertCell();
       colMinutoLlegada.appendChild(document.createTextNode('Minuto llegada'));
     }
   }  
