@@ -21,8 +21,28 @@ export module HTMLUtils {
   export function agregarFilaATabla(fila: any[], tabla: HTMLTableElement) {
   let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
   for (let i: number = 0; i < fila.length; i++) {
+    const valor: string = !(typeof fila[i] === 'undefined' || fila[i] === '') ? String(fila[i]) : '-';
     let celda: HTMLTableDataCellElement = filaHTML.insertCell();
-    celda.appendChild(document.createTextNode(String(fila[i])));
+    celda.appendChild(document.createTextNode(valor));
     }
   }
+
+  // Completa los encabezados de la tabla con los datos de los pasajeros.
+  export function completarEncabezadosDeTabla(cantPasajeros: number, tabla: HTMLTableElement): void {
+    let encabezados: HTMLTableRowElement = tabla.rows[0];
+
+    for (let i: number = 0; i < cantPasajeros; i++) {
+      let colNroPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
+      colNroPasajero.appendChild(document.createTextNode('N° Pasajero'));
+
+      let colTipoPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
+      colTipoPasajero.appendChild(document.createTextNode('Tipo Pasajero'));
+      
+      let colEstadoPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
+      colEstadoPasajero.appendChild(document.createTextNode('Estado'));
+
+      let colMinutoLlegada: HTMLTableHeaderCellElement = encabezados.insertCell();
+      colMinutoLlegada.appendChild(document.createTextNode('Minuto llegada'));
+    }
+  }  
 }
