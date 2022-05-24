@@ -48,6 +48,10 @@ export class Pasajero {
     this.estado = EstadoPasajero.PASANDO_A_CONTROL_METALES;
   }
 
+  public pasandoAFacturacion(): void {
+    this.estado = EstadoPasajero.PASANDO_A_CONTROL_METALES;
+  }
+
   public getEstado(): EstadoPasajero {
     return this.estado;
   }
