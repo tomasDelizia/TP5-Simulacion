@@ -134,12 +134,25 @@ export class SimuladorColas {
           let rndTipoPasajero: number = Math.random();
           let tipoPasajero: string = this.getTipoPasajero(rndTipoPasajero);
           totalPasajeros ++;
+
+          let pasajero: Pasajero = new Pasajero(
+            totalPasajeros,
+            tipoPasajero,
+            reloj
+          );
+
           switch (tipoPasajero) {
             case "A":
               totalPasajerosA++;
-              rndFacturacion = Math.random();
-              tiempoFacturacion = this.getTiempoFacturacion(rndFacturacion);
-              finFacturacion = reloj + tiempoFacturacion;
+              if (empleadoFacturacion.estaLibre) {
+                empleadoFacturacion.ocupado();
+
+                rndFacturacion = Math.random();
+                tiempoFacturacion = this.getTiempoFacturacion(rndFacturacion);
+                finFacturacion = reloj + tiempoFacturacion;
+              }
+              else
+                colaFacturacion.push(pasajero);
               break;
             case "B":
               totalPasajerosB++;
@@ -156,11 +169,7 @@ export class SimuladorColas {
               break;
           }
 
-          let pasajero: Pasajero = new Pasajero(
-            totalPasajeros,
-            tipoPasajero,
-            reloj
-          );
+
 
           break;
 

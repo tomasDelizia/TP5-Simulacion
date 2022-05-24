@@ -15,6 +15,14 @@ export class Empleado {
     this.estado = EstadoEmpleado.OCUPADO;
   }
 
+  public estaLibre(): boolean {
+    return this.estado == EstadoEmpleado.LIBRE;
+  }
+
+  public estaOcupado(): boolean {
+    return this.estado == EstadoEmpleado.OCUPADO;
+  }
+
   public getEstado(): string {
     return EstadoEmpleado[this.estado];
   }
