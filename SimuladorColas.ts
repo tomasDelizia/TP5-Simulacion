@@ -149,7 +149,7 @@ export class SimuladorColas {
       switch (tipoEvento) {
         // Inicio de la simulación.
         case Evento.INICIO_SIMULACION: {
-          rndLlegada = Math.random();
+          rndLlegada = Number(Math.random().toFixed(4));
           tiempoEntreLlegadas = this.getTiempoEntreLlegadas(rndLlegada);
           proximaLlegada = reloj + tiempoEntreLlegadas;
           break;
@@ -157,12 +157,12 @@ export class SimuladorColas {
         // Llegada de un pasajero.
         case Evento.LLEGADA_PASAJERO: {
           // Obtenemos el tipo de pasajero.
-          let rndTipoPasajero: number = Math.random();
+          let rndTipoPasajero: number = Number(Math.random().toFixed(4));
           let tipoPasajero: string = this.getTipoPasajero(rndTipoPasajero);
           totalPasajeros ++;
 
           // Generamos la llegada del próximo pasajero.
-          rndLlegada = Math.random();
+          rndLlegada = Number(Math.random().toFixed(4));
           tiempoEntreLlegadas = this.getTiempoEntreLlegadas(rndLlegada);
           proximaLlegada = reloj + tiempoEntreLlegadas;
 
@@ -184,7 +184,7 @@ export class SimuladorColas {
                 empleadoFacturacion.ocupado();
 
                 // Generamos el tiempo de facturación.
-                rndFacturacion = Math.random();
+                rndFacturacion = Number(Math.random().toFixed(4));
                 tiempoFacturacion = this.getTiempoFacturacion(rndFacturacion);
                 finFacturacion = reloj + tiempoFacturacion;
               }
@@ -203,7 +203,7 @@ export class SimuladorColas {
                 empleadoVentaBillete.ocupado();
 
                 // Generamos el tiempo de venta de billete.
-                rndVentaBillete = Math.random();
+                rndVentaBillete = Number(Math.random().toFixed(4));
                 tiempoVentaBillete = this.getTiempoVentaBillete(rndVentaBillete);
                 finVentaBillete = reloj + tiempoVentaBillete;
               }
@@ -222,8 +222,8 @@ export class SimuladorColas {
                 empleadoChequeoBillete.ocupado();
 
                 // Generamos el tiempo de chequeo de billete.
-                rnd1ChequeoBillete = Math.random();
-                rnd1ChequeoBillete = Math.random();
+                rnd1ChequeoBillete = Number(Math.random().toFixed(4));
+                rnd1ChequeoBillete = Number(Math.random().toFixed(4));
                 tiempoChequeoBillete = this.getTiempoChequeoBillete(rnd1ChequeoBillete, rnd2ChequeoBillete);
                 finChequeoBillete = reloj + tiempoChequeoBillete;
               }
@@ -240,7 +240,7 @@ export class SimuladorColas {
         // Fin de facturación de un pasajero.
         case Evento.FIN_FACTURACION: {
           // Se genera el tiempo que tardará el pasajero atendido en pasar a la zona de control de metales.
-          rndPaseEntreFacturacionYControl = Math.random();
+          rndPaseEntreFacturacionYControl = Number(Math.random().toFixed(4));
           tiempoPaseEntreFacturacionYControl = this.getTiempoPasoEntreZonas(rndPaseEntreFacturacionYControl);
           finPaseEntreFacturacionYControl = reloj + tiempoPaseEntreFacturacionYControl;
           // Buscamos el pasajero atendido y le cambiamos el estado.
@@ -255,7 +255,7 @@ export class SimuladorColas {
             // Quitamos a un pasajero de la cola y cambiamos su estado.
             colaFacturacion.shift().facturandoEquipaje();
             // Generamos el tiempo de facturación.
-            rndFacturacion = Math.random();
+            rndFacturacion = Number(Math.random().toFixed(4));
             tiempoFacturacion = this.getTiempoFacturacion(rndFacturacion);
             finFacturacion = reloj + tiempoFacturacion;
           }
@@ -265,7 +265,7 @@ export class SimuladorColas {
         // Fin de venta de billete a un pasajero.
         case Evento.FIN_VENTA_BILLETE: {
           // Se genera el tiempo que tardará el pasajero atendido en pasar a la ventanilla de facturación.
-          rndPaseEntreVentaYFacturacion = Math.random();
+          rndPaseEntreVentaYFacturacion = Number(Math.random().toFixed(4));
           tiempoPaseEntreVentaYFacturacion = this.getTiempoPasoEntreZonas(rndPaseEntreVentaYFacturacion);
           finPaseEntreVentaYFacturacion = reloj + tiempoPaseEntreVentaYFacturacion;
           // Buscamos el pasajero atendido y le cambiamos el estado.
@@ -280,7 +280,7 @@ export class SimuladorColas {
             // Quitamos a un pasajero de la cola y cambiamos su estado.
             colaVentaBillete.shift().comprandoBillete();
             // Generamos el tiempo de venta de billete.
-            rndVentaBillete = Math.random();
+            rndVentaBillete = Number(Math.random().toFixed(4));
             tiempoVentaBillete = this.getTiempoVentaBillete(rndVentaBillete);
             finVentaBillete = reloj + tiempoVentaBillete;
           }
@@ -290,7 +290,7 @@ export class SimuladorColas {
         // Fin de chequeo de billete a un pasajero.
         case Evento.FIN_CHEQUEO_BILLETE: {
           // Se genera el tiempo que tardará el pasajero atendido en pasar a la zona de control de metales.
-          rndPaseEntreChequeoYControl = Math.random();
+          rndPaseEntreChequeoYControl = Number(Math.random().toFixed(4));
           tiempoPaseEntreChequeoYControl = this.getTiempoPasoEntreZonas(rndPaseEntreChequeoYControl);
           finPaseEntreChequeoYControl = reloj + tiempoPaseEntreChequeoYControl;
           // Buscamos el pasajero atendido y le cambiamos el estado.
@@ -305,8 +305,8 @@ export class SimuladorColas {
             // Quitamos a un pasajero de la cola y cambiamos su estado.
             colaChequeoBillete.shift().chequeandoBillete();
             // Generamos el tiempo de Chequeo de billete.
-            rnd1ChequeoBillete = Math.random();
-            rnd1ChequeoBillete = Math.random();
+            rnd1ChequeoBillete = Number(Math.random().toFixed(4));
+            rnd1ChequeoBillete = Number(Math.random().toFixed(4));
             tiempoChequeoBillete = this.getTiempoChequeoBillete(rnd1ChequeoBillete, rnd2ChequeoBillete);
             finChequeoBillete = reloj + tiempoChequeoBillete;
           }
@@ -316,7 +316,7 @@ export class SimuladorColas {
         // Fin de control de metales a un pasajero.
         case Evento.FIN_CONTROL_METALES: {
           // Se genera el tiempo que tardará el pasajero atendido en pasar a la zona de embarque.
-          rndPaseEntreControlYEmbarque = Math.random();
+          rndPaseEntreControlYEmbarque = Number(Math.random().toFixed(4));
           tiempoPaseEntreControlYEmbarque = this.getTiempoPasoEntreZonas(rndPaseEntreControlYEmbarque);
           finPaseEntreControlYEmbarque = reloj + tiempoPaseEntreControlYEmbarque;
           // Buscamos el pasajero atendido y le cambiamos el estado.
@@ -330,7 +330,7 @@ export class SimuladorColas {
             empleadoControlMetales.ocupado();
             // Quitamos a un pasajero de la cola y cambiamos su estado.
             colaControlMetales.shift().enControlMetales();
-            rndControlMetales = Math.random();
+            rndControlMetales = Number(Math.random().toFixed(4));
             tiempoControlMetales = this.getTiempoControlMetales(rndControlMetales);
             finControlMetales = reloj + tiempoControlMetales;
           }
@@ -346,7 +346,7 @@ export class SimuladorColas {
             empleadoFacturacion.ocupado();
 
             // Generamos el tiempo de facturación.
-            rndFacturacion = Math.random();
+            rndFacturacion = Number(Math.random().toFixed(4));
             tiempoFacturacion = this.getTiempoFacturacion(rndFacturacion);
             finFacturacion = reloj + tiempoFacturacion;
           }
@@ -366,7 +366,7 @@ export class SimuladorColas {
             empleadoControlMetales.ocupado();
 
             // Generamos el tiempo de facturación.
-            rndControlMetales = Math.random();
+            rndControlMetales = Number(Math.random().toFixed(4));
             tiempoControlMetales = this.getTiempoFacturacion(rndControlMetales);
             finControlMetales = reloj + tiempoControlMetales;
           }
@@ -386,7 +386,7 @@ export class SimuladorColas {
             empleadoControlMetales.ocupado();
 
             // Generamos el tiempo de facturación.
-            rndControlMetales = Math.random();
+            rndControlMetales = Number(Math.random().toFixed(4));
             tiempoControlMetales = this.getTiempoFacturacion(rndControlMetales);
             finControlMetales = reloj + tiempoControlMetales;
           }
@@ -500,7 +500,8 @@ export class SimuladorColas {
 
   // Cálculo del tiempo entre llegadas, que tiene distribución exponencial.
   public getTiempoEntreLlegadas(rndLlegada: number): number {
-    return -this.mediaTiempoEntreLlegadas * Math.log(1 - rndLlegada);
+    let tiempo: number = -this.mediaTiempoEntreLlegadas * Math.log(1 - rndLlegada);
+    return Number(tiempo.toFixed(4));
   }
 
   // Obtención del tipo de pasajero según la probabilidad asociada.
@@ -514,26 +515,31 @@ export class SimuladorColas {
 
   // Cálculo del tiempo de facturación, que tiene distribución uniforme.
   public getTiempoFacturacion(rndTiempoFacturacion: number): number {
-    return this.aTiempoFacturacion + rndTiempoFacturacion * (this.bTiempoFacturacion - this.aTiempoFacturacion);
+    let tiempo: number = this.aTiempoFacturacion + rndTiempoFacturacion * (this.bTiempoFacturacion - this.aTiempoFacturacion);
+    return Number(tiempo.toFixed(4));
   }
 
   // Cálculo del tiempo de venta de billete, que tiene distribución exponencial.
   public getTiempoVentaBillete(rndTiempoVenta: number): number {
-    return -this.mediaTiempoVentaBilletes * Math.log(1 - rndTiempoVenta);
+    let tiempo: number = -this.mediaTiempoVentaBilletes * Math.log(1 - rndTiempoVenta);
+    return Number(tiempo.toFixed(4));
   }
 
   // Cálculo del tiempo de chequeo de billete, que tiene distribución normal.
   public getTiempoChequeoBillete(rndTiempoChequeo1: number, rndTiempoChequeo2: number): number {
-    return (Math.sqrt(-2 * Math.log(rndTiempoChequeo1)) * Math.cos(2 * Math.PI * rndTiempoChequeo2)) * this.desviacionTiempoChequeoBilletes + this.mediaTiempoChequeoBilletes;
+    let tiempo: number = (Math.sqrt(-2 * Math.log(rndTiempoChequeo1)) * Math.cos(2 * Math.PI * rndTiempoChequeo2)) * this.desviacionTiempoChequeoBilletes + this.mediaTiempoChequeoBilletes;
+    return Number(tiempo.toFixed(4));
   }
 
   // Cálculo del tiempo de chequeo de billete, que tiene distribución exponencial.
   public getTiempoControlMetales(rndTiempoControl: number): number {
-    return -this.mediaTiempoControlMetales * Math.log(1 - rndTiempoControl);
+    let tiempo: number = -this.mediaTiempoControlMetales * Math.log(1 - rndTiempoControl);
+    return Number(tiempo.toFixed(4));
   }
 
   // Cálculo del tiempo de paso entre zonas, que tiene distribución exponencial.
   public getTiempoPasoEntreZonas(rndPasoZonas: number): number {
-    return -this.mediaTiempoPasoEntreZonas * Math.log(1 - rndPasoZonas);
+    let tiempo: number = -this.mediaTiempoPasoEntreZonas * Math.log(1 - rndPasoZonas);
+    return Number(tiempo.toFixed(4));
   }
 }
