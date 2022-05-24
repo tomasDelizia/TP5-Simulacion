@@ -57,7 +57,8 @@ export class SimuladorColas {
     let finVentaBillete: number = 0;
 
     // Chequeo billete.
-    let rndChequeoBillete: number = 0;
+    let rnd1ChequeoBillete: number = 0;
+    let rnd2ChequeoBillete: number = 0;
     let tiempoChequeoBillete: number = 0;
     let finChequeoBillete: number = 0;
 
@@ -108,14 +109,16 @@ export class SimuladorColas {
         tipoEvento = Evento.FIN_SIMULACION;
       }
       else {
-        tipoEvento = this.getSiguienteEvento([
+        let eventosCandidatos: number[] = [
           proximaLlegada,
           finFacturacion,
           finVentaBillete,
           finChequeoBillete,
           finControlMetales,
           finPaseEntreZonas
-        ]);
+        ];
+        reloj = Math.min(...eventosCandidatos);
+        tipoEvento = this.getSiguienteEvento(eventosCandidatos);
       }
 
       switch (tipoEvento) {
@@ -128,6 +131,36 @@ export class SimuladorColas {
 
         // Llegada de pasajero.
         case Evento.LLEGADA_PASAJERO:
+          let rndTipoPasajero: number = Math.random();
+          let tipoPasajero: string = this.getTipoPasajero(rndTipoPasajero);
+          totalPasajeros ++;
+          switch (tipoPasajero) {
+            case "A":
+              totalPasajerosA++;
+              rndFacturacion = Math.random();
+              tiempoFacturacion = this.getTiempoFacturacion(rndFacturacion);
+              finFacturacion = reloj + tiempoFacturacion;
+              break;
+            case "B":
+              totalPasajerosB++;
+              rndVentaBillete = Math.random();
+              tiempoVentaBillete = this.getTiempoVentaBillete(rndVentaBillete);
+              finVentaBillete = reloj + tiempoVentaBillete;
+              break;
+            case "C":
+              totalPasajerosC++;
+              rnd1ChequeoBillete = Math.random();
+              rnd1ChequeoBillete = Math.random();
+              tiempoChequeoBillete = this.getTiempoChequeoBillete(rnd1ChequeoBillete, rnd2ChequeoBillete);
+              finChequeoBillete = reloj + tiempoChequeoBillete;
+              break;
+          }
+
+          let pasajero: Pasajero = new Pasajero(
+            totalPasajeros,
+            tipoPasajero,
+            reloj
+          );
 
           break;
 
@@ -162,7 +195,8 @@ export class SimuladorColas {
         tiempoVentaBillete,
         finVentaBillete,
 
-        rndChequeoBillete,
+        rnd1ChequeoBillete,
+        rnd2ChequeoBillete,
         tiempoChequeoBillete,
         finChequeoBillete,
 
@@ -239,7 +273,18 @@ export class SimuladorColas {
     return -this.mediaTiempoVentaBilletes * Math.log(1 - rndTiempoVenta);
   }
 
-  public getTiempoChequeoBillete(): number {
-    
+  // Cálculo del tiempo de chequeo de billete, que tiene distribución normal.
+  public getTiempoChequeoBillete(rndTiempoChequeo1: number, rndTiempoChequeo2: number): number {
+    return (Math.sqrt(-2 * Math.log(rndTiempoChequeo1)) * Math.cos(2 * Math.PI * rndTiempoChequeo2)) * this.desviacionTiempoChequeoBilletes + this.mediaTiempoChequeoBilletes;
+  }
+
+  // Cálculo del tiempo de chequeo de billete, que tiene distribución exponencial.
+  public getTiempoControlMetales(rndTiempoControl: number): number {
+    return -this.mediaTiempoControlMetales * Math.log(1 - rndTiempoControl);
+  }
+
+  // Cálculo del tiempo de paso entre zonas, que tiene distribución exponencial.
+  public getTiempoPasoEntreZonas(rndPasoZonas: number): number {
+    return -this.mediaTiempoPasoEntreZonas * Math.log(1 - rndPasoZonas);
   }
 }
