@@ -2,6 +2,7 @@ import { Empleado } from "./Empleado";
 import { EstadoPasajero } from "./EstadoPasajero";
 import { Evento } from "./Evento";
 import { Pasajero } from "./Pasajero";
+import { Utils } from "./Utils";
 
 export class SimuladorColas {
   private mediaTiempoEntreLlegadas: number = 3.4474;
@@ -120,6 +121,7 @@ export class SimuladorColas {
     let totalPasajerosEnColaControl: number = 0;
 
     for (let i: number = 0; i < cantEventos; i++) {
+      evento = [];
       // Determinamos el tipo de evento.
       if (i == 0) {
         tipoEvento = Evento.INICIO_SIMULACION;
@@ -139,8 +141,9 @@ export class SimuladorColas {
           finPaseEntreChequeoYControl,
           finPaseEntreControlYEmbarque,
         ];
-        reloj = Math.min(...eventosCandidatos);
+        reloj = Utils.getMenorMayorACero(eventosCandidatos);
         tipoEvento = this.getSiguienteEvento(eventosCandidatos);
+        console.log(Evento[tipoEvento]);
       }
 
       switch (tipoEvento) {
@@ -407,9 +410,11 @@ export class SimuladorColas {
         }
       }
 
+      
+
       evento.push(
         i,
-        tipoEvento,
+        Evento[tipoEvento],
         reloj,
 
         rndLlegada,
@@ -473,10 +478,10 @@ export class SimuladorColas {
         totalPasajerosEnColaControl
         );
 
-      evento.concat(evento, pasajerosEnSistema);
+        // Agregamos el evento a la matriz de estado.
+        this.matrizEstado.push(evento);
     }
-
-    this.matrizEstado.push(evento);
+    
   }
 
   public getMatrizEstado(): any[][] {
@@ -484,10 +489,11 @@ export class SimuladorColas {
   }
 
   public getSiguienteEvento(tiempoEventos: number[]): Evento {
-    let menor: number = Math.min(...tiempoEventos);
+    let menor: number = Utils.getMenorMayorACero(tiempoEventos);
     for (let i: number = 0; i < tiempoEventos.length; i++) {
-      if (tiempoEventos[i] === menor)
+      if (tiempoEventos[i] === menor) {
         return Evento[Evento[i+1]];
+      }
     }
     return -1;
   }
