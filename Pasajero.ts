@@ -44,12 +44,20 @@ export class Pasajero {
     this.estado = EstadoPasajero.ESPERANDO_CHEQUEO_BILLETE;
   }
 
-  public pasandoAControlMetales(): void {
-    this.estado = EstadoPasajero.PASANDO_A_CONTROL_METALES;
+  public pasandoDeVentaAFacturacion(): void {
+    this.estado = EstadoPasajero.PASANDO_DE_VENTA_A_FACTURACION;
   }
 
-  public pasandoAFacturacion(): void {
-    this.estado = EstadoPasajero.PASANDO_A_CONTROL_METALES;
+  public pasandoDeFacturacionAControl(): void {
+    this.estado = EstadoPasajero.PASANDO_DE_FACTURACION_A_CONTROL;
+  }
+
+  public pasandoDeChequeoAControl(): void {
+    this.estado = EstadoPasajero.PASANDO_DE_CHEQUEO_BILLETE_A_CONTROL;
+  }
+
+  public pasandoDeControlAEmbarque(): void {
+    this.estado = EstadoPasajero.PASANDO_DE_CONTROL_A_EMBARQUE;
   }
 
   public getEstado(): EstadoPasajero {

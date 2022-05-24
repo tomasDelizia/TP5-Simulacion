@@ -68,10 +68,25 @@ export class SimuladorColas {
     let tiempoControlMetales: number = 0;
     let finControlMetales: number = 0;
 
-    // Pase entre zonas.
-    let rndPaseEntreZonas: number = 0;
-    let tiempoPaseEntreZonas: number = 0;
-    let finPaseEntreZonas: number = 0;
+    // Pase entre zonas: Venta y facturación.
+    let rndPaseEntreVentaYFacturacion: number = 0;
+    let tiempoPaseEntreVentaYFacturacion: number = 0;
+    let finPaseEntreVentaYFacturacion: number = 0;
+
+    // Pase entre zonas: Facturación y control.
+    let rndPaseEntreFacturacionYControl: number = 0;
+    let tiempoPaseEntreFacturacionYControl: number = 0;
+    let finPaseEntreFacturacionYControl: number = 0;
+
+    // Pase entre zonas: Chequeo y control.
+    let rndPaseEntreChequeoYControl: number = 0;
+    let tiempoPaseEntreChequeoYControl: number = 0;
+    let finPaseEntreChequeoYControl: number = 0;
+
+    // Pase entre zonas: Control y embarque.
+    let rndPaseEntreControlYEmbarque: number = 0;
+    let tiempoPaseEntreControlYEmbarque: number = 0;
+    let finPaseEntreControlYEmbarque: number = 0;
 
     // Empleado facturación.
     let empleadoFacturacion = new Empleado();
@@ -119,7 +134,10 @@ export class SimuladorColas {
           finVentaBillete,
           finChequeoBillete,
           finControlMetales,
-          finPaseEntreZonas
+          finPaseEntreVentaYFacturacion,
+          finPaseEntreFacturacionYControl,
+          finPaseEntreChequeoYControl,
+          finPaseEntreControlYEmbarque,
         ];
         reloj = Math.min(...eventosCandidatos);
         tipoEvento = this.getSiguienteEvento(eventosCandidatos);
@@ -219,11 +237,11 @@ export class SimuladorColas {
         // Fin de facturación de un pasajero.
         case Evento.FIN_FACTURACION: {
           // Se genera el tiempo que tardará el pasajero atendido en pasar a la zona de control de metales.
-          rndPaseEntreZonas = Math.random();
-          tiempoPaseEntreZonas = this.getTiempoPasoEntreZonas(rndPaseEntreZonas);
-          finPaseEntreZonas = reloj + tiempoPaseEntreZonas;
+          rndPaseEntreFacturacionYControl = Math.random();
+          tiempoPaseEntreFacturacionYControl = this.getTiempoPasoEntreZonas(rndPaseEntreFacturacionYControl);
+          finPaseEntreFacturacionYControl = reloj + tiempoPaseEntreFacturacionYControl;
           // Buscamos el pasajero atendido y le cambiamos el estado.
-          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.FACTURANDO_EQUIPAJE)[0].pasandoAControlMetales();
+          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.FACTURANDO_EQUIPAJE).pasandoDeFacturacionAControl();
 
           // Preguntamos si hay alguien en la cola.
           if (colaFacturacion.length === 0) {
@@ -244,11 +262,11 @@ export class SimuladorColas {
         // Fin de venta de billete a un pasajero.
         case Evento.FIN_VENTA_BILLETE: {
           // Se genera el tiempo que tardará el pasajero atendido en pasar a la ventanilla de facturación.
-          rndFacturacion = Math.random();
-          tiempoFacturacion = this.getTiempoPasoEntreZonas(rndPaseEntreZonas);
-          finFacturacion = reloj + tiempoPaseEntreZonas;
+          rndPaseEntreVentaYFacturacion = Math.random();
+          tiempoPaseEntreVentaYFacturacion = this.getTiempoPasoEntreZonas(rndPaseEntreVentaYFacturacion);
+          finPaseEntreVentaYFacturacion = reloj + tiempoPaseEntreVentaYFacturacion;
           // Buscamos el pasajero atendido y le cambiamos el estado.
-          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.COMPRANDO_BILLETE).pasandoAFacturacion();
+          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.COMPRANDO_BILLETE).pasandoDeVentaAFacturacion();
 
           // Preguntamos si hay alguien en la cola.
           if (colaVentaBillete.length === 0) {
@@ -269,11 +287,11 @@ export class SimuladorColas {
         // Fin de chequeo de billete a un pasajero.
         case Evento.FIN_CHEQUEO_BILLETE: {
           // Se genera el tiempo que tardará el pasajero atendido en pasar a la zona de control de metales.
-          rndPaseEntreZonas = Math.random();
-          tiempoPaseEntreZonas = this.getTiempoPasoEntreZonas(rndPaseEntreZonas);
-          finPaseEntreZonas = reloj + tiempoPaseEntreZonas;
+          rndPaseEntreChequeoYControl = Math.random();
+          tiempoPaseEntreChequeoYControl = this.getTiempoPasoEntreZonas(rndPaseEntreChequeoYControl);
+          finPaseEntreChequeoYControl = reloj + tiempoPaseEntreChequeoYControl;
           // Buscamos el pasajero atendido y le cambiamos el estado.
-          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.CHEQUEANDO_BILLETE).pasandoAControlMetales();
+          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.CHEQUEANDO_BILLETE).pasandoDeChequeoAControl();
 
           // Preguntamos si hay alguien en la cola.
           if (colaChequeoBillete.length === 0) {
@@ -294,8 +312,12 @@ export class SimuladorColas {
 
         // Fin de control de metales a un pasajero.
         case Evento.FIN_CONTROL_METALES: {
-          // Buscamos el pasajero atendido y lo eliminamos del sistema.
-          pasajerosEnSistema.splice(pasajerosEnSistema.findIndex(pasajero => pasajero.getEstado() === EstadoPasajero.EN_CONTROL_METALES));
+          // Se genera el tiempo que tardará el pasajero atendido en pasar a la zona de embarque.
+          rndPaseEntreControlYEmbarque = Math.random();
+          tiempoPaseEntreControlYEmbarque = this.getTiempoPasoEntreZonas(rndPaseEntreControlYEmbarque);
+          finPaseEntreControlYEmbarque = reloj + tiempoPaseEntreControlYEmbarque;
+          // Buscamos el pasajero atendido y le cambiamos el estado.
+          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.EN_CONTROL_METALES).pasandoDeControlAEmbarque();
 
           // Preguntamos si hay alguien en la cola.
           if (colaControlMetales.length === 0) {
@@ -313,9 +335,69 @@ export class SimuladorColas {
         }
 
         // Fin de paso entre zonas de un pasajero.
-        case Evento.FIN_PASO_ENTRE_ZONAS: {
-          // Buscamos el pasajero que llegó a la siguiente zona y le cambiamos el estado.
-          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_A_CHEQUEO_BILLETE).pasandoAControlMetales();
+        case Evento.FIN_PASO_ENTRE_VENTA_Y_FACTURACION: {
+          // Buscamos el pasajero que llegó a la zona de facturación y le cambiamos el estado. Antes, preguntamos por el servidor.
+          let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_VENTA_A_FACTURACION);
+          if (empleadoFacturacion.estaLibre()) {
+            pasajero.facturandoEquipaje();
+            empleadoFacturacion.ocupado();
+
+            // Generamos el tiempo de facturación.
+            rndFacturacion = Math.random();
+            tiempoFacturacion = this.getTiempoFacturacion(rndFacturacion);
+            finFacturacion = reloj + tiempoFacturacion;
+          }
+          else {
+            pasajero.enEsperaFacturacion();
+            colaFacturacion.push(pasajero);
+          }
+          break;
+        }
+
+        // Fin de paso entre zonas de un pasajero.
+        case Evento.FIN_PASO_ENTRE_FACTURACION_Y_CONTROL: {
+          // Buscamos el pasajero que llegó a la zona de control y le cambiamos el estado. Antes, preguntamos por el servidor.
+          let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_FACTURACION_A_CONTROL);
+          if (empleadoControlMetales.estaLibre()) {
+            pasajero.enControlMetales();
+            empleadoControlMetales.ocupado();
+
+            // Generamos el tiempo de facturación.
+            rndControlMetales = Math.random();
+            tiempoControlMetales = this.getTiempoFacturacion(rndControlMetales);
+            finControlMetales = reloj + tiempoControlMetales;
+          }
+          else {
+            pasajero.enEsperaControlMetales();
+            colaControlMetales.push(pasajero);
+          }
+          break;
+        }
+
+        // Fin de paso entre zonas de un pasajero.
+        case Evento.FIN_PASO_ENTRE_CHEQUEO_Y_CONTROL: {
+          // Buscamos el pasajero que llegó a la zona de control y le cambiamos el estado. Antes, preguntamos por el servidor.
+          let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_CHEQUEO_BILLETE_A_CONTROL);
+          if (empleadoControlMetales.estaLibre()) {
+            pasajero.enControlMetales();
+            empleadoControlMetales.ocupado();
+
+            // Generamos el tiempo de facturación.
+            rndControlMetales = Math.random();
+            tiempoControlMetales = this.getTiempoFacturacion(rndControlMetales);
+            finControlMetales = reloj + tiempoControlMetales;
+          }
+          else {
+            pasajero.enEsperaControlMetales();
+            colaControlMetales.push(pasajero);
+          }
+          break;
+        }
+
+        // Fin de paso entre zonas de un pasajero.
+        case Evento.FIN_PASO_ENTRE_CONTROL_Y_EMBARQUE: {
+          // Buscamos el pasajero que llegó a embarque y lo eliminamos del sistema.
+          pasajerosEnSistema.splice(pasajerosEnSistema.findIndex(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_CONTROL_A_EMBARQUE));
           break;
         }
 
@@ -351,9 +433,21 @@ export class SimuladorColas {
         tiempoControlMetales,
         finControlMetales,
 
-        rndPaseEntreZonas,
-        tiempoPaseEntreZonas,
-        finPaseEntreZonas,
+        rndPaseEntreVentaYFacturacion,
+        tiempoPaseEntreVentaYFacturacion,
+        finPaseEntreVentaYFacturacion,
+
+        rndPaseEntreFacturacionYControl,
+        tiempoPaseEntreFacturacionYControl,
+        finPaseEntreFacturacionYControl,
+
+        rndPaseEntreChequeoYControl,
+        tiempoPaseEntreChequeoYControl,
+        finPaseEntreChequeoYControl,
+
+        rndPaseEntreControlYEmbarque,
+        tiempoPaseEntreControlYEmbarque,
+        finPaseEntreControlYEmbarque,
 
         empleadoFacturacion.getEstado(),
         colaFacturacion.length,
