@@ -89,9 +89,6 @@ export class SimuladorColas {
     let empleadoControlMetales = new Empleado();
     let colaControlMetales: Pasajero[] = [];
 
-    // Pasajeros yendo a otra zona.
-    let colaEntreZonas: Pasajero[] = [];
-
     // Pasajeros en el sistema.
     let pasajerosEnSistema: Pasajero[] = [];
 
@@ -317,6 +314,8 @@ export class SimuladorColas {
 
         // Fin de paso entre zonas de un pasajero.
         case Evento.FIN_PASO_ENTRE_ZONAS: {
+          // Buscamos el pasajero que llegó a la siguiente zona y le cambiamos el estado.
+          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_A_CHEQUEO_BILLETE).pasandoAControlMetales();
           break;
         }
 
