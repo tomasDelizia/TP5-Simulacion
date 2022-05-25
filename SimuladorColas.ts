@@ -115,8 +115,7 @@ export class SimuladorColas {
     let minutoTiempoOciosoEmpControlDesde: number = 0;
     let acuTiempoOciosoEmpControl: number = 0;
     let cantPasajerosAtentidosPorVenta: number = 0;
-    let cantMaxPasajerosEnCola: number = 0;
-    let acuTiempoEsperaColaControl: number = 0;
+    let cantMaxPasajerosEnAlgunaCola: number = 0;
     let totalPasajerosEnColaControl: number = 0;
 
     this.cantMaxPasajeros = 0;
@@ -469,6 +468,17 @@ export class SimuladorColas {
         }
       }
 
+      // Comparamos la cantidad de pasajeros en todas las colas en la iteración actual.
+      cantMaxPasajerosEnAlgunaCola = Math.max(
+        Math.max(
+        colaVentaBillete.length,
+        colaFacturacion.length,
+        colaChequeoBillete.length,
+        colaControlMetales.length
+        ),
+        cantMaxPasajerosEnAlgunaCola
+      );
+
       evento.push(
         i,
         Evento[tipoEvento],
@@ -532,8 +542,7 @@ export class SimuladorColas {
         Number(acuTiempoPasajeros.toFixed(4)),
         Number(acuTiempoOciosoEmpControl.toFixed(4)),
         cantPasajerosAtentidosPorVenta,
-        cantMaxPasajerosEnCola,
-        Number(acuTiempoEsperaColaControl.toFixed(4)),
+        cantMaxPasajerosEnAlgunaCola,
         totalPasajerosEnColaControl
         );
 
