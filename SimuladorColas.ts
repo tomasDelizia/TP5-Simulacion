@@ -371,7 +371,7 @@ export class SimuladorColas {
           tiempoPaseEntreVentaYFacturacion = null;
           finPaseEntreVentaYFacturacion = null;
           // Buscamos el pasajero que llegó a la zona de facturación y le cambiamos el estado. Antes, preguntamos por el servidor.
-          let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_VENTA_A_FACTURACION);
+          let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_VENTA_A_FACTURACION && pasajero.minutoLlegadaDeVentaAFacturacion === reloj);
           pasajero.minutoLlegadaDeVentaAFacturacion = null;
           if (empleadoFacturacion.estaLibre()) {
             pasajero.facturandoEquipaje();
@@ -395,7 +395,7 @@ export class SimuladorColas {
           tiempoPaseEntreFacturacionYControl = null;
           finPaseEntreFacturacionYControl = null;
           // Buscamos el pasajero que llegó a la zona de control y le cambiamos el estado. Antes, preguntamos por el servidor.
-          let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_FACTURACION_A_CONTROL);
+          let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_FACTURACION_A_CONTROL && pasajero.minutoLlegadaDeFacturacionAControl === reloj);
           pasajero.minutoLlegadaDeFacturacionAControl = null;
           if (empleadoControlMetales.estaLibre()) {
             pasajero.enControlMetales();
@@ -420,7 +420,7 @@ export class SimuladorColas {
           tiempoPaseEntreChequeoYControl = null;
           finPaseEntreChequeoYControl = null;
           // Buscamos el pasajero que llegó a la zona de control y le cambiamos el estado. Antes, preguntamos por el servidor.
-          let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_CHEQUEO_BILLETE_A_CONTROL);
+          let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_CHEQUEO_BILLETE_A_CONTROL && pasajero.minutoLlegadaDeChequeoBilleteAControl === reloj);
           pasajero.minutoLlegadaDeChequeoBilleteAControl = null;
           if (empleadoControlMetales.estaLibre()) {
             pasajero.enControlMetales();
@@ -444,7 +444,7 @@ export class SimuladorColas {
           tiempoPaseEntreControlYEmbarque = null;
           finPaseEntreControlYEmbarque = null;
           // Buscamos el pasajero que llegó a embarque y lo eliminamos del sistema.
-          pasajerosEnSistema.splice(pasajerosEnSistema.findIndex(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_CONTROL_A_EMBARQUE), 1);
+          pasajerosEnSistema.splice(pasajerosEnSistema.findIndex(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_CONTROL_A_EMBARQUE && pasajero.minutoLlegadaDeControlAEmbarque === reloj), 1);
           break;
         }
 
@@ -608,7 +608,7 @@ export class SimuladorColas {
   // Cálculo del tiempo de chequeo de billete, que tiene distribución normal.
   public getTiempoChequeoBillete(rndTiempoChequeo1: number, rndTiempoChequeo2: number): number {
     let tiempo: number = (Math.sqrt(-2 * Math.log(rndTiempoChequeo1)) * Math.cos(2 * Math.PI * rndTiempoChequeo2)) * this.desviacionTiempoChequeoBilletes + this.mediaTiempoChequeoBilletes;
-    return Number(tiempo.toFixed(4));
+    return Number(Math.abs(tiempo).toFixed(4));
   }
 
   // Cálculo del tiempo de chequeo de billete, que tiene distribución exponencial.
