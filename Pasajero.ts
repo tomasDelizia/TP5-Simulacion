@@ -5,6 +5,42 @@ export class Pasajero {
   private tipoPasajero: string;
   private minutoLlegada: number;
   private estado: EstadoPasajero;
+  private _minutoLlegadaDeVentaAFacturacion: number;
+  private _minutoLlegadaDeFacturacionAControl: number;
+  private _minutoLlegadaDeChequeoBilleteAControl: number;
+  private _minutoLlegadaDeControlAEmbarque: number;
+
+  public get minutoLlegadaDeVentaAFacturacion() {
+    return this._minutoLlegadaDeVentaAFacturacion;
+  }
+
+  public get minutoLlegadaDeFacturacionAControl() {
+    return this._minutoLlegadaDeFacturacionAControl;
+  }
+
+  public get minutoLlegadaDeChequeoBilleteAControl() {
+    return this._minutoLlegadaDeChequeoBilleteAControl;
+  }
+
+  public get minutoLlegadaDeControlAEmbarque() {
+    return this._minutoLlegadaDeControlAEmbarque;
+  }
+
+  public set minutoLlegadaDeVentaAFacturacion(minuto: number) {
+    this._minutoLlegadaDeVentaAFacturacion = minuto;
+  }
+
+  public set minutoLlegadaDeFacturacionAControl(minuto: number) {
+    this._minutoLlegadaDeFacturacionAControl = minuto;
+  }
+
+  public set minutoLlegadaDeChequeoBilleteAControl(minuto: number) {
+    this._minutoLlegadaDeChequeoBilleteAControl = minuto;
+  }
+
+  public set minutoLlegadaDeControlAEmbarque(minuto: number) {
+    this._minutoLlegadaDeControlAEmbarque = minuto;
+  }
 
   public constructor(id: number, tipoPasajero: string, minutoLlegada: number) {
     this.id = id;

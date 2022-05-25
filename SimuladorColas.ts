@@ -21,12 +21,6 @@ export class SimuladorColas {
 
   private matrizEstado: any[][];
 
-  private tiposPasajeros: Map<string, number> = new Map<string, number>([
-    ["A", 0.3],
-    ["B", 0.45],
-    ["C", 1]
-  ]);
-
   private cantMaxPasajeros;
 
   private probTiposPasajeros: number[] = [0.3, 0.45, 1];
@@ -142,11 +136,20 @@ export class SimuladorColas {
           finVentaBillete,
           finChequeoBillete,
           finControlMetales,
-          finPaseEntreVentaYFacturacion,
-          finPaseEntreFacturacionYControl,
-          finPaseEntreChequeoYControl,
-          finPaseEntreControlYEmbarque,
+          // finPaseEntreVentaYFacturacion,
+          // finPaseEntreFacturacionYControl,
+          // finPaseEntreChequeoYControl,
+          // finPaseEntreControlYEmbarque,
         ];
+        for (let i: number = 0; i < pasajerosEnSistema.length; i++) {
+          let pasajero: Pasajero = pasajerosEnSistema[i];
+          eventosCandidatos.push(
+            pasajero.minutoLlegadaDeVentaAFacturacion,
+            pasajero.minutoLlegadaDeFacturacionAControl,
+            pasajero.minutoLlegadaDeChequeoBilleteAControl,
+            pasajero.minutoLlegadaDeControlAEmbarque
+          );
+        }
         reloj = Utils.getMenorMayorACero(eventosCandidatos);
         tipoEvento = this.getSiguienteEvento(eventosCandidatos);
       }
@@ -252,8 +255,9 @@ export class SimuladorColas {
           tiempoPaseEntreFacturacionYControl = this.getTiempoPasoEntreZonas(rndPaseEntreFacturacionYControl);
           finPaseEntreFacturacionYControl = Number((reloj + tiempoPaseEntreFacturacionYControl).toFixed(4));
           // Buscamos el pasajero atendido y le cambiamos el estado.
-          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.FACTURANDO_EQUIPAJE).pasandoDeFacturacionAControl();
-
+          let pasajeroAtendido: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.FACTURANDO_EQUIPAJE);
+          pasajeroAtendido.pasandoDeFacturacionAControl();
+          pasajeroAtendido.minutoLlegadaDeFacturacionAControl = finPaseEntreFacturacionYControl;
           // Preguntamos si hay alguien en la cola.
           if (colaFacturacion.length === 0) {
             empleadoFacturacion.libre();
@@ -280,8 +284,9 @@ export class SimuladorColas {
           tiempoPaseEntreVentaYFacturacion = this.getTiempoPasoEntreZonas(rndPaseEntreVentaYFacturacion);
           finPaseEntreVentaYFacturacion = Number((reloj + tiempoPaseEntreVentaYFacturacion).toFixed(4));
           // Buscamos el pasajero atendido y le cambiamos el estado.
-          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.COMPRANDO_BILLETE).pasandoDeVentaAFacturacion();
-
+          let pasajeroAtendido: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.COMPRANDO_BILLETE);
+          pasajeroAtendido.pasandoDeVentaAFacturacion();
+          pasajeroAtendido.minutoLlegadaDeVentaAFacturacion = finPaseEntreVentaYFacturacion;
           // Preguntamos si hay alguien en la cola.
           if (colaVentaBillete.length === 0) {
             empleadoVentaBillete.libre();
@@ -309,7 +314,9 @@ export class SimuladorColas {
           tiempoPaseEntreChequeoYControl = this.getTiempoPasoEntreZonas(rndPaseEntreChequeoYControl);
           finPaseEntreChequeoYControl = Number((reloj + tiempoPaseEntreChequeoYControl).toFixed(4));
           // Buscamos el pasajero atendido y le cambiamos el estado.
-          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.CHEQUEANDO_BILLETE).pasandoDeChequeoAControl();
+          let pasajeroAtendido: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.CHEQUEANDO_BILLETE);
+          pasajeroAtendido.pasandoDeChequeoAControl();
+          pasajeroAtendido.minutoLlegadaDeChequeoBilleteAControl = finPaseEntreChequeoYControl;
 
           // Preguntamos si hay alguien en la cola.
           if (colaChequeoBillete.length === 0) {
@@ -338,7 +345,9 @@ export class SimuladorColas {
           tiempoPaseEntreControlYEmbarque = this.getTiempoPasoEntreZonas(rndPaseEntreControlYEmbarque);
           finPaseEntreControlYEmbarque = Number((reloj + tiempoPaseEntreControlYEmbarque).toFixed(4));
           // Buscamos el pasajero atendido y le cambiamos el estado.
-          pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.EN_CONTROL_METALES).pasandoDeControlAEmbarque();
+          let pasajeroAtendido: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.EN_CONTROL_METALES);
+          pasajeroAtendido.pasandoDeControlAEmbarque();
+          pasajeroAtendido.minutoLlegadaDeControlAEmbarque = finPaseEntreControlYEmbarque;
 
           // Preguntamos si hay alguien en la cola.
           if (colaControlMetales.length === 0) {
@@ -513,7 +522,11 @@ export class SimuladorColas {
             pasajerosEnSistema[i].getId(),
             pasajerosEnSistema[i].getTipoPasajero(),
             EstadoPasajero[pasajerosEnSistema[i].getEstado()],
-            pasajerosEnSistema[i].getMinutoLlegada()
+            pasajerosEnSistema[i].getMinutoLlegada(),
+            pasajerosEnSistema[i].minutoLlegadaDeVentaAFacturacion,
+            pasajerosEnSistema[i].minutoLlegadaDeFacturacionAControl,
+            pasajerosEnSistema[i].minutoLlegadaDeChequeoBilleteAControl,
+            pasajerosEnSistema[i].minutoLlegadaDeControlAEmbarque,
             );
         }
 

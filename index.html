@@ -15,7 +15,7 @@
     <form>
       <div class="row mb-3 mx-3">
         <div class="col-md">
-          <label class="form-label" for="txtCantNros">Cantidad de eventos(N): </label>
+          <label class="form-label" for="txtCantNros">Cantidad de eventos (N): </label>
           <input
             type="number"
             class="form-control form-control-sm mb-3 tamanio"
@@ -25,7 +25,7 @@
         </div>
 
         <div class="col-md">
-          <label class="form-label" for="txtIndiceDesde">Hora desde:</label>
+          <label class="form-label" for="txtIndiceDesde">Evento desde:</label>
           <input
             type="number"
             class="form-control form-control-sm mb-3 tamanio"
@@ -35,10 +35,10 @@
         </div>
 
         <div class="col-md">
-          <label class="form-label" for="cboJuntarVentanilla">JuntarVentanillas:</label>
+          <label class="form-label" for="cboJuntarVentanilla">Juntar Ventanillas de Facturación y Venta:</label>
           <select class="form-select mb-3 tamanio" id="cboJuntarVentanilla">
-            <option value="0" selected>Seleccione una opcion...</option>
-            <option value="1">Si</option>
+            <option value="0" selected>Seleccione una opción...</option>
+            <option value="1">Sí</option>
             <option value="2">No</option>
           </select>
         </div>
@@ -134,25 +134,33 @@
                 <th>Tiempo Pase Entre Control y Embarque</th>
                 <th style="color: red">Fin Pase Entre Control y Embarque</th>
 
-                
-                <th>Estado Facturacion</th>
+                <!-- Empleado Facturación -->
+                <th>Estado Empleado</th>
                 <th>Cola Facturacion</th>
-                <th>Estado Venta</th>
+
+                <!-- Empleado Venta Billete -->
+                <th>Estado Empleado</th>
                 <th>Cola Venta</th>
-                <th>Estado Chequeo</th>
+
+                <!-- Empleado Chequeo Billete -->
+                <th>Estado Empleado</th>
                 <th>Cola Chequeo</th>
-                <th>Estado Control</th>
+
+                <!-- Empleado Control Metales -->
+                <th>Estado Empleado</th>
                 <th>Cola Control</th>
-                <th>Cant Pasajeros A</th>
-                <th>Cant Pasajeros B</th>
-                <th>Cant Pasajeros C</th>
+
+                <!-- Métricas -->
+                <th>Total Pasajeros A</th>
+                <th>Total Pasajeros B</th>
+                <th>Total Pasajeros C</th>
                 <th>Total Pasajeros</th>
-                <th>AcumTiempoPasajeroSistema</th>
-                <th>AcumTiempoOciosoEmpFact</th>
-                <th>CantAtendidosVenta</th>
-                <th>LongitudMaxCola</th>
-                <th>AcumTiempoEsperaControl</th>
-                <th>ContPasajerosColaControl</th>
+                <th>Acumulador Tiempo Pasajeros en Sistema</th>
+                <th>Acumulador Tiempo Ocioso de Empleado Facturación</th>
+                <th>Cantidad Pasajeros Atendidos por Empleado Venta</th>
+                <th>Cantidad Máxima de Pasajeros en Alguna Cola</th>
+                <th>Acumulador Tiempo Espera en Cola de Control</th>
+                <th>Total Pasajeros en Cola de Control</th>
                 <!-- Agregar las columnas correspondientes a los pasajeros -->
               </tr>
             </thead>
