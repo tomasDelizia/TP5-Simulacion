@@ -22,12 +22,11 @@ export module HTMLUtils {
   let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
   for (let i: number = 0; i < fila.length; i++) {
     const valor: string = !(typeof fila[i] === 'undefined' || String(fila[i]) == 'null' || fila[i] === '') ? String(fila[i]) : '-';
-    /* if (i == 5 || i == 9 || i == 11 || i == 14 || i == 20 || i == 23 || i == 26 || i == 29 || i == 32) {
+    if (i == 5 || i == 9 || i == 11 || i == 14 || i == 16) {
       let celda: HTMLTableDataCellElement = filaHTML.insertCell();
       celda.style.color = "red"
       celda.appendChild(document.createTextNode(valor));
     }
-    */
     let celda: HTMLTableDataCellElement = filaHTML.insertCell();
     celda.appendChild(document.createTextNode(valor));
     }
