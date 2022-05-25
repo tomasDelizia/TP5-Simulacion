@@ -201,6 +201,7 @@ export class SimuladorColas {
 
             // Llega un pasajero de tipo B. Va primero a la ventanilla de venta de billetes.
             case "B": {
+              cantPasajerosAtentidosPorVenta++
               totalPasajerosB++;
               if (empleadoVentaBillete.estaLibre()) {
                 pasajero.comprandoBillete();
@@ -210,6 +211,7 @@ export class SimuladorColas {
                 rndVentaBillete = Number(Math.random().toFixed(4));
                 tiempoVentaBillete = this.getTiempoVentaBillete(rndVentaBillete);
                 finVentaBillete = Number((reloj + tiempoVentaBillete).toFixed(4));
+                
               }
               else {
                 pasajero.enEsperaCompraBillete();
@@ -351,6 +353,7 @@ export class SimuladorColas {
             empleadoControlMetales.libre();
           }
           else {
+            totalPasajerosEnColaControl++
             empleadoControlMetales.ocupado();
             // Quitamos a un pasajero de la cola y cambiamos su estado.
             colaControlMetales.shift().enControlMetales();
@@ -405,6 +408,7 @@ export class SimuladorColas {
           else {
             pasajero.enEsperaControlMetales();
             colaControlMetales.push(pasajero);
+
           }
           break;
         }
