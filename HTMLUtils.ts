@@ -41,7 +41,7 @@ export module HTMLUtils {
     for (let i: number = 0; i < cantPasajeros; i++) {
       let colPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
       colPasajero.colSpan = 4;
-      colPasajero.appendChild(document.createTextNode('Pasajero N° ' + i+1));
+      colPasajero.appendChild(document.createTextNode('Pasajero N° ' + (i+1)));
 
       let colNroPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
       colNroPasajero.appendChild(document.createTextNode('N° Pasajero'));

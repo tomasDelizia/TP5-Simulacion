@@ -430,7 +430,14 @@ export class SimuladorColas {
           tiempoPaseEntreControlYEmbarque = null;
           finPaseEntreControlYEmbarque = null;
           // Buscamos el pasajero que llegó a embarque y lo eliminamos del sistema.
+          
+
+          //delete pasajerosEnSistema[pasajerosEnSistema.findIndex(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_CONTROL_A_EMBARQUE)];
+          console.log("Antes de splice")
+          console.log(pasajerosEnSistema)
           pasajerosEnSistema.splice(pasajerosEnSistema.findIndex(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_CONTROL_A_EMBARQUE));
+          console.log("después de splice")
+          console.log(pasajerosEnSistema)
           break;
         }
 
