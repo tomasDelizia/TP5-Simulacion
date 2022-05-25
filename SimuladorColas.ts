@@ -316,6 +316,7 @@ export class SimuladorColas {
           // Buscamos el pasajero atendido y le cambiamos el estado.
           let pasajeroAtendido: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.CHEQUEANDO_BILLETE);
           pasajeroAtendido.pasandoDeChequeoAControl();
+          console.log(pasajerosEnSistema)
           pasajeroAtendido.minutoLlegadaDeChequeoBilleteAControl = finPaseEntreChequeoYControl;
 
           // Preguntamos si hay alguien en la cola.
@@ -371,6 +372,7 @@ export class SimuladorColas {
           finPaseEntreVentaYFacturacion = null;
           // Buscamos el pasajero que llegó a la zona de facturación y le cambiamos el estado. Antes, preguntamos por el servidor.
           let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_VENTA_A_FACTURACION);
+          pasajero.minutoLlegadaDeVentaAFacturacion = null;
           if (empleadoFacturacion.estaLibre()) {
             pasajero.facturandoEquipaje();
             empleadoFacturacion.ocupado();
@@ -394,6 +396,7 @@ export class SimuladorColas {
           finPaseEntreFacturacionYControl = null;
           // Buscamos el pasajero que llegó a la zona de control y le cambiamos el estado. Antes, preguntamos por el servidor.
           let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_FACTURACION_A_CONTROL);
+          pasajero.minutoLlegadaDeFacturacionAControl = null;
           if (empleadoControlMetales.estaLibre()) {
             pasajero.enControlMetales();
             empleadoControlMetales.ocupado();
@@ -412,11 +415,13 @@ export class SimuladorColas {
 
         // Fin de paso entre zonas de un pasajero.
         case Evento.FIN_PASO_ENTRE_CHEQUEO_Y_CONTROL: {
+          console.log(pasajerosEnSistema)
           rndPaseEntreChequeoYControl = null;
           tiempoPaseEntreChequeoYControl = null;
           finPaseEntreChequeoYControl = null;
           // Buscamos el pasajero que llegó a la zona de control y le cambiamos el estado. Antes, preguntamos por el servidor.
           let pasajero: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.PASANDO_DE_CHEQUEO_BILLETE_A_CONTROL);
+          pasajero.minutoLlegadaDeChequeoBilleteAControl = null;
           if (empleadoControlMetales.estaLibre()) {
             pasajero.enControlMetales();
             empleadoControlMetales.ocupado();
@@ -547,7 +552,6 @@ export class SimuladorColas {
   }
 
   public getSiguienteEvento(tiemposEventos: number[], relojActual: number): Evento {
-    console.log(tiemposEventos)
     let menor: number = Utils.getMenorMayorACero(tiemposEventos);
     for (let i: number = 0; i < tiemposEventos.length; i++) {
       if (tiemposEventos[i] === menor) {
