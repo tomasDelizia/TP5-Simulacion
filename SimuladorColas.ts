@@ -136,10 +136,6 @@ export class SimuladorColas {
           finVentaBillete,
           finChequeoBillete,
           finControlMetales,
-          // finPaseEntreVentaYFacturacion,
-          // finPaseEntreFacturacionYControl,
-          // finPaseEntreChequeoYControl,
-          // finPaseEntreControlYEmbarque,
         ];
         for (let i: number = 0; i < pasajerosEnSistema.length; i++) {
           let pasajero: Pasajero = pasajerosEnSistema[i];

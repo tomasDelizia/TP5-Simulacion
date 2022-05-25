@@ -10,7 +10,7 @@ body{
   height: 36px;
 }
 
-.Sscrollable {
+.scrollable {
   height: 30rem;
   overflow: scroll;
 }
