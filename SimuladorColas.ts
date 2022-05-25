@@ -151,7 +151,7 @@ export class SimuladorColas {
           );
         }
         reloj = Utils.getMenorMayorACero(eventosCandidatos);
-        tipoEvento = this.getSiguienteEvento(eventosCandidatos);
+        tipoEvento = this.getSiguienteEvento(eventosCandidatos, reloj);
       }
 
       switch (tipoEvento) {
@@ -546,11 +546,29 @@ export class SimuladorColas {
     return this.matrizEstado;
   }
 
-  public getSiguienteEvento(tiempoEventos: number[]): Evento {
-    let menor: number = Utils.getMenorMayorACero(tiempoEventos);
-    for (let i: number = 0; i < tiempoEventos.length; i++) {
-      if (tiempoEventos[i] === menor) {
-        return Evento[Evento[i+1]];
+  public getSiguienteEvento(tiemposEventos: number[], relojActual: number): Evento {
+    console.log(tiemposEventos)
+    let menor: number = Utils.getMenorMayorACero(tiemposEventos);
+    for (let i: number = 0; i < tiemposEventos.length; i++) {
+      if (tiemposEventos[i] === menor) {
+        if (i < 5)
+          return Evento[Evento[i+1]];
+        if (tiemposEventos[i] >= relojActual) {
+          switch (i % 4) {
+            case 0: {
+              return Evento.FIN_PASO_ENTRE_CONTROL_Y_EMBARQUE;
+            }
+            case 1: {
+              return Evento.FIN_PASO_ENTRE_VENTA_Y_FACTURACION;
+            }
+            case 2: {
+              return Evento.FIN_PASO_ENTRE_FACTURACION_Y_CONTROL;
+            }
+            case 3: {
+              return Evento.FIN_PASO_ENTRE_CHEQUEO_Y_CONTROL;
+            }
+          }
+        }
       }
     }
     return -1;

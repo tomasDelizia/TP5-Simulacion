@@ -5,7 +5,7 @@ import './style.css';
 const tablaSimulacionDinamica: HTMLTableElement = document.getElementById('tablaSimulacionDinamica') as HTMLTableElement;
 
 const simulador: SimuladorColas = new SimuladorColas();
-simulador.simular(10, 1);
+simulador.simular(100, 1);
 
 let matriz: any[][] = simulador.getMatrizEstado();
 HTMLUtils.completarEncabezadosDeTabla(simulador.getCantMaxPasajerosEnSistema(), tablaSimulacionDinamica);
