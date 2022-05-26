@@ -529,13 +529,13 @@ export class SimuladorColasAlternativo {
         if (tiemposEventos[i] >= relojActual) {
           switch (i % 3) {
             case 0: {
-              return EventoAlt.FIN_PASO_ENTRE_CHEQUEO_Y_CONTROL
+              return EventoAlt.FIN_PASO_ENTRE_CHEQUEO_Y_CONTROL;
             }
             case 1: {
-              return EventoAlt.FIN_PASO_ENTRE_VENTA_FACTURACION_Y_CONTROL;
+              return EventoAlt.FIN_PASO_ENTRE_CONTROL_Y_EMBARQUE;
             }
             case 2: {
-              return EventoAlt.FIN_PASO_ENTRE_CONTROL_Y_EMBARQUE;
+              return EventoAlt.FIN_PASO_ENTRE_VENTA_FACTURACION_Y_CONTROL;
 
             }
           }

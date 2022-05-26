@@ -50,6 +50,42 @@ export module HTMLUtils {
 
     for (let i: number = 0; i < cantPasajeros; i++) {
       let colPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
+      colPasajero.colSpan = 8;
+      colPasajero.appendChild(document.createTextNode('Pasajero N° ' + (i+1)));
+
+      let colNroPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colNroPasajero.appendChild(document.createTextNode('ID Pasajero'));
+
+      let colTipoPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colTipoPasajero.appendChild(document.createTextNode('Tipo Pasajero'));
+      
+      let colEstadoPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colEstadoPasajero.appendChild(document.createTextNode('Estado'));
+
+      let colMinutoLlegada: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegada.appendChild(document.createTextNode('Minuto llegada'));
+
+      let colMinutoLlegadaDeVentaAFacturacion: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegadaDeVentaAFacturacion.appendChild(document.createTextNode('Minuto llegada de venta a facturación'));
+
+      let colMinutoLlegadaDeFacturacionAControl: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegadaDeFacturacionAControl.appendChild(document.createTextNode('Minuto llegada de facturación a control'));
+
+      let colMinutoLlegadaDeChequeoBilleteAControl: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegadaDeChequeoBilleteAControl.appendChild(document.createTextNode('Minuto llegada de chequeo a control'));
+
+      let colMinutoLlegadaDeControlAEmbarque: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegadaDeControlAEmbarque.appendChild(document.createTextNode('Minuto llegada de control a embarque'));
+    }
+  } 
+  
+  // Completa los encabezados de la tabla con los datos de los pasajeros.
+  export function completarEncabezadosDeTablaAlternativa(cantPasajeros: number, tabla: HTMLTableElement): void {
+    let encabezados: HTMLTableRowElement = tabla.rows[0];
+    let subEncabezados: HTMLTableRowElement = tabla.rows[1];
+
+    for (let i: number = 0; i < cantPasajeros; i++) {
+      let colPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
       colPasajero.colSpan = 7;
       colPasajero.appendChild(document.createTextNode('Pasajero N° ' + (i+1)));
 
@@ -74,5 +110,5 @@ export module HTMLUtils {
       let colMinutoLlegadaDeControlAEmbarque: HTMLTableHeaderCellElement = subEncabezados.insertCell();
       colMinutoLlegadaDeControlAEmbarque.appendChild(document.createTextNode('Minuto llegada de control a embarque'));
     }
-  }  
+  }
 }

@@ -56,7 +56,7 @@ const simular = async () => {
       let matrizEstado: any[][] = simuladorAlternativo.getMatrizEstado();
 
       // Cargamos la tabla a mostrar.
-      HTMLUtils.completarEncabezadosDeTabla(simuladorAlternativo.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
+      HTMLUtils.completarEncabezadosDeTablaAlternativa(simuladorAlternativo.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
       HTMLUtils.limpiarTabla(tablaSimulacionAlternativa);
       for (let i: number = 0; i < matrizEstado.length; i++) {
         HTMLUtils.agregarFilaATabla(matrizEstado[i], tablaSimulacionAlternativa);
@@ -113,17 +113,4 @@ function validarParametros(): boolean {
     return false;
   }
   return true;
-}
-
-
-HTMLUtils.mostrarSeccion(divTablaSimulacionAlternativa)
-
-simuladorAlternativo.simular(10, 0);
-
-let matrizEstado: any[][] = simuladorAlternativo.getMatrizEstado();
-
-HTMLUtils.completarEncabezadosDeTabla(simuladorAlternativo.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
-HTMLUtils.limpiarTabla(tablaSimulacionAlternativa);
-for (let i: number = 0; i < matrizEstado.length; i++) {
-  HTMLUtils.agregarFilaATabla(matrizEstado[i], tablaSimulacionAlternativa);
 }
