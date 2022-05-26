@@ -138,6 +138,7 @@ export class SimuladorColasAlternativo {
         tipoEvento = this.getSiguienteEvento(eventosCandidatos, reloj);
       }
 
+      console.log(tipoEvento);
       switch (tipoEvento) {
         // Inicio de la simulación.
         case EventoAlt.INICIO_SIMULACION: {
@@ -295,7 +296,6 @@ export class SimuladorColasAlternativo {
           // Buscamos el pasajero atendido y le cambiamos el estado.
           let pasajeroAtendido: PasajeroAlt = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.CHEQUEANDO_BILLETE);
           pasajeroAtendido.pasandoDeChequeoAControl();
-          console.log(pasajerosEnSistema)
           pasajeroAtendido.minutoLlegadaDeChequeoBilleteAControl = finPaseEntreChequeoYControl;
 
           // Preguntamos si hay alguien en la cola.
@@ -375,7 +375,6 @@ export class SimuladorColasAlternativo {
 
         // Fin de paso entre zonas de un pasajero.
         case EventoAlt.FIN_PASO_ENTRE_CHEQUEO_Y_CONTROL: {
-          console.log(pasajerosEnSistema)
           rndPaseEntreChequeoYControl = null;
           tiempoPaseEntreChequeoYControl = null;
           finPaseEntreChequeoYControl = null;
@@ -464,10 +463,6 @@ export class SimuladorColasAlternativo {
         tiempoPaseEntreVentaFacturacionYControl,
         finPaseEntreVentaFacturacionYControl,
 
-        rndPaseEntreVentaFacturacionYControl,
-        tiempoPaseEntreVentaFacturacionYControl,
-        finPaseEntreVentaFacturacionYControl,
-
         rndPaseEntreChequeoYControl,
         tiempoPaseEntreChequeoYControl,
         finPaseEntreChequeoYControl,
@@ -518,7 +513,6 @@ export class SimuladorColasAlternativo {
         // Cargamos la matriz de estado a mostrar.
         if ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos)
           this.matrizEstado.push(evento);
-        console.log(evento);  
     }
   }
 
@@ -535,13 +529,14 @@ export class SimuladorColasAlternativo {
         if (tiemposEventos[i] >= relojActual) {
           switch (i % 3) {
             case 0: {
-              return EventoAlt.FIN_PASO_ENTRE_CONTROL_Y_EMBARQUE;
+              return EventoAlt.FIN_PASO_ENTRE_CHEQUEO_Y_CONTROL
             }
             case 1: {
               return EventoAlt.FIN_PASO_ENTRE_VENTA_FACTURACION_Y_CONTROL;
             }
             case 2: {
-              return EventoAlt.FIN_PASO_ENTRE_CHEQUEO_Y_CONTROL;
+              return EventoAlt.FIN_PASO_ENTRE_CONTROL_Y_EMBARQUE;
+
             }
           }
         }

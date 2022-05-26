@@ -118,7 +118,7 @@ function validarParametros(): boolean {
 
 HTMLUtils.mostrarSeccion(divTablaSimulacionAlternativa)
 
-simuladorAlternativo.simular(10, 1);
+simuladorAlternativo.simular(10, 0);
 
 let matrizEstado: any[][] = simuladorAlternativo.getMatrizEstado();
 
