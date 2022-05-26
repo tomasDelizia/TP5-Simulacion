@@ -48,6 +48,21 @@ const simular = async () => {
       HTMLUtils.limpiarTabla(tablaSimulacionAlternativa);
       HTMLUtils.mostrarSeccion(divTablaSimulacionAlternativa);
       HTMLUtils.ocultarSeccion(divTablaSimulacion);
+
+      // Realizamos la simulación alternativa.
+      var startTime = performance.now()
+      await simuladorAlternativo.simular(n, eventoDesde);
+
+      let matrizEstado: any[][] = simuladorAlternativo.getMatrizEstado();
+
+      // Cargamos la tabla a mostrar.
+      HTMLUtils.completarEncabezadosDeTabla(simuladorAlternativo.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
+      HTMLUtils.limpiarTabla(tablaSimulacionAlternativa);
+      for (let i: number = 0; i < matrizEstado.length; i++) {
+        HTMLUtils.agregarFilaATabla(matrizEstado[i], tablaSimulacionAlternativa);
+      }
+      var endTime = performance.now();
+      console.log(`La simulación tardó ${endTime - startTime} milisegundos`);
       break;
     }
     case "2": {

@@ -174,16 +174,13 @@
                 <th rowspan="2">Evento</th>
                 <th rowspan="2">Reloj (min.)</th>
                 <th colspan="5">Llegada pasajero</th>
-                <th colspan="3">Facturación equipaje</th>
-                <th colspan="3">Venta billete</th>
+                <th colspan="4">Facturación y venta equipaje</th>
                 <th colspan="4">Chequeo billete</th>
                 <th colspan="3">Control Metales</th>
-                <th colspan="3">Pase entre Venta y Facturación</th>
-                <th colspan="3">Pase entre Facturación y Control</th>
+                <th colspan="3">Pase entre Facturación-Venta y Control</th>
                 <th colspan="3">Pase entre Chequeo y Control</th>
                 <th colspan="3">Pase entre Control y Embarque</th>
-                <th colspan="2">Empleado Facturación</th>
-                <th colspan="2">Empleado Venta Billete</th>
+                <th colspan="3">Empleados Facturación y Venta</th>
                 <th colspan="2">Empleado Chequeo Billete</th>
                 <th colspan="2">Empleado Control Metales</th>
                 <th colspan="9">Métricas</th>
@@ -197,15 +194,11 @@
                 <th>RND Tipo Pasajero</th>
                 <th>Tipo Pasajero</th>
 
-                <!-- Tiempo facturación pasajero -->
-                <th>RND Tiempo Facturación</th>
-                <th>Tiempo Facturación</th>
-                <th style="color: red">Fin Facturación</th>
-
-                <!-- Tiempo venta billete -->
-                <th>RND Venta Billete</th>
-                <th>Tiempo Venta Billete</th>
-                <th style="color: red">Fin Venta Billete</th>
+                <!-- Tiempo facturación y venta pasajero -->
+                <th>RND Tiempo Facturación y venta</th>
+                <th>Tiempo Facturación y venta</th>
+                <th style="color: red">Fin Facturación y venta 1</th>
+                <th style="color: red">Fin Facturación y venta 2</th>
 
                 <!-- Tiempo chequeo billete -->
                 <th>RND 1 Chequeo Billete</th>
@@ -218,15 +211,10 @@
                 <th>Tiempo Control Metales</th>
                 <th style="color: red">Fin Control Metales</th>
 
-                <!-- Pase de venta a facturacion -->
-                <th>RND Pase Entre Venta y Facturación</th>
-                <th>Tiempo Pase Entre Venta y Facturación</th>
-                <th>Fin Pase Entre Venta y Facturación</th>
-
-                <!-- Pase entre facturacion y control -->
-                <th>RND Pase entre Facturación y Control</th>
-                <th>Tiempo Pase entre Facturación y Control</th>
-                <th>Fin Pase entre Facturación y Control</th>
+                <!-- Pase entre facturacion-Venta y control -->
+                <th>RND Pase entre Facturación-Venta y Control</th>
+                <th>Tiempo Pase entre Facturación-Venta y Control</th>
+                <th>Fin Pase entre Facturación-Venta y Control</th>
 
                 <!-- Pase entre chequeo y control -->
                 <th>RND Pase Entre Chequeo y Control</th>
@@ -238,13 +226,10 @@
                 <th>Tiempo Pase Entre Control y Embarque</th>
                 <th>Fin Pase Entre Control y Embarque</th>
 
-                <!-- Empleado Facturación -->
-                <th>Estado Empleado</th>
-                <th>Cola Facturacion</th>
-
-                <!-- Empleado Venta Billete -->
-                <th>Estado Empleado</th>
-                <th>Cola Venta</th>
+                <!-- Empleado Facturación y Venta 1 -->
+                <th>Estado Empleado1</th>
+                <th>Estado Empleado2</th>
+                <th>Cola Facturacion y Venta</th>
 
                 <!-- Empleado Chequeo Billete -->
                 <th>Estado Empleado</th>
@@ -261,7 +246,7 @@
                 <th>Total Pasajeros</th>
                 <th>Acumulador Tiempo Pasajeros en Sistema</th>
                 <th>Acumulador Tiempo Ocioso del Agente de Control</th>
-                <th>Cantidad Pasajeros Atendidos por Empleado Venta</th>
+                <th>Cantidad Pasajeros Atendidos por Empleados de Venta</th>
                 <th>Cantidad Máxima de Pasajeros en Alguna Cola</th>
                 <th>Total Pasajeros en Cola de Control</th>
                 <!-- Agregar las columnas correspondientes a los pasajeros -->
