@@ -21,15 +21,15 @@ export class SimuladorColas {
 
   private matrizEstado: any[][];
 
-  private cantMaxPasajeros;
+  private cantMaxPasajeros: number;
 
   private probTiposPasajeros: number[] = [0.3, 0.45, 1];
 
-  public async simular(cantEventos: number, indiceDesde: number): Promise<void> {
+  public async simular(cantEventos: number, eventoDesde: number): Promise<void> {
     this.matrizEstado = [];
 
     // Definimos el rango de filas que vamos a mostrar.
-    let indiceHasta: number = indiceDesde + 399;
+    let indiceHasta: number = eventoDesde + 399;
     if (indiceHasta > cantEventos - 1)
       indiceHasta = cantEventos;
 
@@ -566,7 +566,7 @@ export class SimuladorColas {
         tipoPasajero = "";
 
         // Cargamos la matriz de estado a mostrar.
-        if ((i >= indiceDesde && i <= indiceHasta) || i == cantEventos) {
+        if ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos) {
         this.matrizEstado.push(evento);
       }
     }
