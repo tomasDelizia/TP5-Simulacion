@@ -46,14 +46,14 @@ const simular = async () => {
   switch (cboJuntarVentanilla.value) {
     case "1": {
       HTMLUtils.limpiarTabla(tablaSimulacionAlternativa);
-      HTMLUtils.mostrarSeccion(tablaSimulacionAlternativa);
-      HTMLUtils.ocultarSeccion(tablaSimulacion);
+      HTMLUtils.mostrarSeccion(divTablaSimulacionAlternativa);
+      HTMLUtils.ocultarSeccion(divTablaSimulacion);
       break;
     }
     case "2": {
       HTMLUtils.limpiarTabla(tablaSimulacion);
-      HTMLUtils.mostrarSeccion(tablaSimulacion);
-      HTMLUtils.ocultarSeccion(tablaSimulacionAlternativa);
+      HTMLUtils.mostrarSeccion(divTablaSimulacion);
+      HTMLUtils.ocultarSeccion(divTablaSimulacionAlternativa);
 
       // Realizamos la simulación.
       var startTime = performance.now()

@@ -12,9 +12,6 @@ export module HTMLUtils {
 
   // Función que elimina todas las filas de la tabla HTML excepto los encabezados.
   export function limpiarTabla(tabla: HTMLTableElement) {
-    let tamTabla: number = tabla.rows.length;
-    if (!tamTabla)
-      return;
     for (let i: number = tabla.rows.length; i > 2; i--) {
       tabla.deleteRow(i - 1);
     }
