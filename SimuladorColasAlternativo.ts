@@ -170,6 +170,7 @@ export class SimuladorColasAlternativo {
             // Llega un pasajero de tipo AB. Va primero a la ventanilla de Venta-facturación de equipaje.
             case "AB": {
               totalPasajerosA++;
+              totalPasajerosB++;
               if (empleado1VentaFacturacion.estaLibre()) {
                 pasajero.enVentaFacturacionEquipaje();
                 empleado1VentaFacturacion.ocupado();
@@ -228,7 +229,7 @@ export class SimuladorColasAlternativo {
           tiempoPaseEntreVentaFacturacionYControl = Number(this.getTiempoPasoEntreZonas(rndPaseEntreVentaFacturacionYControl).toFixed(4));
           finPaseEntreVentaFacturacionYControl = Number((reloj + tiempoPaseEntreVentaFacturacionYControl).toFixed(4));
           // Buscamos el pasajero atendido y le cambiamos el estado.
-          let pasajeroAtendido: PasajeroAlt = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.EN_VENTA_FACTURACION_EQUIPAJE);
+          let pasajeroAtendido: PasajeroAlt = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.EN_VENTA_FACTURACION);
           pasajeroAtendido.pasandoDeVentaFacturacionAControl();
           pasajeroAtendido.minutoLlegadaDeVentaFacturacionAControl = finPaseEntreVentaFacturacionYControl;
           // Preguntamos si hay alguien en la cola.
@@ -259,7 +260,7 @@ export class SimuladorColasAlternativo {
           tiempoPaseEntreVentaFacturacionYControl = Number(this.getTiempoPasoEntreZonas(rndPaseEntreVentaFacturacionYControl).toFixed(4));
           finPaseEntreVentaFacturacionYControl = Number((reloj + tiempoPaseEntreVentaFacturacionYControl).toFixed(4));
           // Buscamos el pasajero atendido y le cambiamos el estado.
-          let pasajeroAtendido: PasajeroAlt = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.EN_VENTA_FACTURACION_EQUIPAJE);
+          let pasajeroAtendido: PasajeroAlt = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.EN_VENTA_FACTURACION);
           pasajeroAtendido.pasandoDeVentaFacturacionAControl();
           pasajeroAtendido.minutoLlegadaDeVentaFacturacionAControl = finPaseEntreVentaFacturacionYControl;
           // Preguntamos si hay alguien en la cola.

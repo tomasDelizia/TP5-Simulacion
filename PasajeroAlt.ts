@@ -40,7 +40,7 @@ export class PasajeroAlt {
   }
 
   public enVentaFacturacionEquipaje(): void {
-    this.estado = EstadoPasajeroAlt.EN_VENTA_FACTURACION_EQUIPAJE;
+    this.estado = EstadoPasajeroAlt.EN_VENTA_FACTURACION;
   }
 
   public enEsperaVentaFacturacion(): void {
