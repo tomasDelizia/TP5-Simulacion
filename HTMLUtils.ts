@@ -39,7 +39,7 @@ export module HTMLUtils {
 
     for (let i: number = 0; i < cantPasajeros; i++) {
       let colPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
-      colPasajero.colSpan = 8;
+      colPasajero.colSpan = 7;
       colPasajero.appendChild(document.createTextNode('Pasajero N° ' + (i+1)));
 
       let colNroPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
@@ -54,11 +54,8 @@ export module HTMLUtils {
       let colMinutoLlegada: HTMLTableHeaderCellElement = subEncabezados.insertCell();
       colMinutoLlegada.appendChild(document.createTextNode('Minuto llegada'));
 
-      let colMinutoLlegadaDeVentaAFacturacion: HTMLTableHeaderCellElement = subEncabezados.insertCell();
-      colMinutoLlegadaDeVentaAFacturacion.appendChild(document.createTextNode('Minuto llegada de venta a facturación'));
-
       let colMinutoLlegadaDeFacturacionAControl: HTMLTableHeaderCellElement = subEncabezados.insertCell();
-      colMinutoLlegadaDeFacturacionAControl.appendChild(document.createTextNode('Minuto llegada de facturación a control'));
+      colMinutoLlegadaDeFacturacionAControl.appendChild(document.createTextNode('Minuto llegada de venta-facturación a control'));
 
       let colMinutoLlegadaDeChequeoBilleteAControl: HTMLTableHeaderCellElement = subEncabezados.insertCell();
       colMinutoLlegadaDeChequeoBilleteAControl.appendChild(document.createTextNode('Minuto llegada de chequeo a control'));

@@ -447,11 +447,7 @@ export class SimuladorColasAlternativo {
         rndVentaFacturacion,
         tiempoVentaFacturacion,
         finVentaFacturacionEmp1,
-        finVentaFacturacionEmp1,
-
-        rndVentaBillete,
-        tiempoVentaBillete,
-        finVentaBillete,
+        finVentaFacturacionEmp2,
 
         rnd1ChequeoBillete,
         rnd2ChequeoBillete,
@@ -466,9 +462,9 @@ export class SimuladorColasAlternativo {
         tiempoPaseEntreVentaFacturacionYControl,
         finPaseEntreVentaFacturacionYControl,
 
-        rndPaseEntreFacturacionYControl,
-        tiempoPaseEntreFacturacionYControl,
-        finPaseEntreFacturacionYControl,
+        rndPaseEntreVentaFacturacionYControl,
+        tiempoPaseEntreVentaFacturacionYControl,
+        finPaseEntreVentaFacturacionYControl,
 
         rndPaseEntreChequeoYControl,
         tiempoPaseEntreChequeoYControl,
@@ -479,10 +475,8 @@ export class SimuladorColasAlternativo {
         finPaseEntreControlYEmbarque,
 
         empleado1VentaFacturacion.getEstado(),
-        colaVentaFacturacion.length,
-
         empleado2VentaFacturacion.getEstado(),
-        colaVentaBillete.length,
+        colaVentaFacturacion.length,
 
         empleadoChequeoBillete.getEstado(),
         colaChequeoBillete.length,
@@ -505,10 +499,9 @@ export class SimuladorColasAlternativo {
           evento.push(
             pasajerosEnSistema[i].getId(),
             pasajerosEnSistema[i].getTipoPasajero(),
-            EstadoPasajero[pasajerosEnSistema[i].getEstado()],
+            EstadoPasajeroAlt[pasajerosEnSistema[i].getEstado()],
             pasajerosEnSistema[i].getMinutoLlegada(),
-            pasajerosEnSistema[i].minutoLlegadaDeVentaAFacturacion,
-            pasajerosEnSistema[i].minutoLlegadaDeFacturacionAControl,
+            pasajerosEnSistema[i].minutoLlegadaDeVentaFacturacionAControl,
             pasajerosEnSistema[i].minutoLlegadaDeChequeoBilleteAControl,
             pasajerosEnSistema[i].minutoLlegadaDeControlAEmbarque,
             );
