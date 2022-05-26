@@ -133,6 +133,7 @@ export class SimuladorColasAlternativo {
             pasajero.minutoLlegadaDeControlAEmbarque
           );
         }
+        console.log(eventosCandidatos);
         reloj = Number(Utils.getMenorMayorACero(eventosCandidatos).toFixed(4));
         tipoEvento = this.getSiguienteEvento(eventosCandidatos, reloj);
       }
@@ -221,6 +222,7 @@ export class SimuladorColasAlternativo {
 
         // Fin de facturación-venta de un pasajero atendido por el empleado 1.
         case EventoAlt.FIN_FACTURACION_VENTA_EMP_1: {
+          let venta: number = finVentaFacturacionEmp1;
           rndVentaFacturacion = null;
           tiempoVentaFacturacion = null;
           finVentaFacturacionEmp1 = null;
@@ -229,7 +231,7 @@ export class SimuladorColasAlternativo {
           tiempoPaseEntreVentaFacturacionYControl = Number(this.getTiempoPasoEntreZonas(rndPaseEntreVentaFacturacionYControl).toFixed(4));
           finPaseEntreVentaFacturacionYControl = Number((reloj + tiempoPaseEntreVentaFacturacionYControl).toFixed(4));
           // Buscamos el pasajero atendido y le cambiamos el estado.
-          let pasajeroAtendido: PasajeroAlt = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.EN_VENTA_FACTURACION);
+          let pasajeroAtendido: PasajeroAlt = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.EN_VENTA_FACTURACION && venta === reloj);
           pasajeroAtendido.pasandoDeVentaFacturacionAControl();
           pasajeroAtendido.minutoLlegadaDeVentaFacturacionAControl = finPaseEntreVentaFacturacionYControl;
           // Preguntamos si hay alguien en la cola.
@@ -252,6 +254,7 @@ export class SimuladorColasAlternativo {
 
         // Fin de facturación-venta de un pasajero atendido por el empleado 2.
         case EventoAlt.FIN_FACTURACION_VENTA_EMP_2: {
+          let venta: number = finVentaFacturacionEmp1;
           rndVentaFacturacion = null;
           tiempoVentaFacturacion = null;
           finVentaFacturacionEmp2 = null;
@@ -260,7 +263,7 @@ export class SimuladorColasAlternativo {
           tiempoPaseEntreVentaFacturacionYControl = Number(this.getTiempoPasoEntreZonas(rndPaseEntreVentaFacturacionYControl).toFixed(4));
           finPaseEntreVentaFacturacionYControl = Number((reloj + tiempoPaseEntreVentaFacturacionYControl).toFixed(4));
           // Buscamos el pasajero atendido y le cambiamos el estado.
-          let pasajeroAtendido: PasajeroAlt = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.EN_VENTA_FACTURACION);
+          let pasajeroAtendido: PasajeroAlt = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.EN_VENTA_FACTURACION && venta === reloj);
           pasajeroAtendido.pasandoDeVentaFacturacionAControl();
           pasajeroAtendido.minutoLlegadaDeVentaFacturacionAControl = finPaseEntreVentaFacturacionYControl;
           // Preguntamos si hay alguien en la cola.

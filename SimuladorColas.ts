@@ -315,7 +315,6 @@ export class SimuladorColas {
           // Buscamos el pasajero atendido y le cambiamos el estado.
           let pasajeroAtendido: Pasajero = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajero.CHEQUEANDO_BILLETE);
           pasajeroAtendido.pasandoDeChequeoAControl();
-          console.log(pasajerosEnSistema)
           pasajeroAtendido.minutoLlegadaDeChequeoBilleteAControl = finPaseEntreChequeoYControl;
 
           // Preguntamos si hay alguien en la cola.
@@ -419,7 +418,6 @@ export class SimuladorColas {
 
         // Fin de paso entre zonas de un pasajero.
         case Evento.FIN_PASO_ENTRE_CHEQUEO_Y_CONTROL: {
-          console.log(pasajerosEnSistema)
           rndPaseEntreChequeoYControl = null;
           tiempoPaseEntreChequeoYControl = null;
           finPaseEntreChequeoYControl = null;
