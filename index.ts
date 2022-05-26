@@ -1,5 +1,6 @@
 import { HTMLUtils } from './HTMLUtils';
 import { SimuladorColas } from './SimuladorColas';
+import { SimuladorColasAlternativo } from './SimuladorColasAlternativo';
 import './style.css';
 
 // Definición de los cuadros de texto de la interfaz de usuario.
@@ -53,22 +54,24 @@ const simular = async () => {
       HTMLUtils.limpiarTabla(tablaSimulacion);
       HTMLUtils.mostrarSeccion(tablaSimulacion);
       HTMLUtils.ocultarSeccion(tablaSimulacionAlternativa);
+
+      // Realizamos la simulación.
+      var startTime = performance.now()
+      await simulador.simular(n, eventoDesde);
+
+      let matrizEstado: any[][] = simulador.getMatrizEstado();
+
+      // Cargamos la tabla a mostrar.
+      HTMLUtils.completarEncabezadosDeTabla(simulador.getCantMaxPasajerosEnSistema(), tablaSimulacion);
+      HTMLUtils.limpiarTabla(tablaSimulacion);
+      for (let i: number = 0; i < matrizEstado.length; i++) {
+        HTMLUtils.agregarFilaATabla(matrizEstado[i], tablaSimulacion);
+      }
+      var endTime = performance.now();
+      console.log(`La simulación tardó ${endTime - startTime} milisegundos`);
       break;
     }
   }
-  // Realizamos la simulación.
-  var startTime = performance.now()
-  await monteCarlo.simular(n, lambda, indiceDesde, probAtiende);
-
-  // Cargamos la tabla a mostrar.
-  const cantColumnas: number = monteCarlo.getCantColumnas();
-
-  HTMLUtils.agregarEncabezadoATabla(cantColumnas, tablaMontecarlo);
-  for (let i: number = 0; i < monteCarlo.getTablaMuestra().length; i++)
-    await HTMLUtils.agregarFilaATabla(monteCarlo.getTablaMuestra()[i], cantColumnas, tablaMontecarlo);
-
-  var endTime = performance.now();
-  console.log(`La simulación tardó ${endTime - startTime} milisegundos`);
 }
 
 // Validación de los parámetros del usuario.
@@ -95,12 +98,4 @@ function validarParametros(): boolean {
     return false;
   }
   return true;
-}
-simulador.simular(100, 1);
-
-let matriz: any[][] = simulador.getMatrizEstado();
-HTMLUtils.completarEncabezadosDeTabla(simulador.getCantMaxPasajerosEnSistema(), tablaSimulacion);
-HTMLUtils.limpiarTabla(tablaSimulacion);
-for (let i: number = 0; i < matriz.length; i++) {
-  HTMLUtils.agregarFilaATabla(matriz[i], tablaSimulacion);
 }

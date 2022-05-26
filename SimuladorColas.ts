@@ -565,8 +565,10 @@ export class SimuladorColas {
         rndTipoPasajero = null;
         tipoPasajero = "";
 
-        // Agregamos el evento a la matriz de estado.
+        // Cargamos la matriz de estado a mostrar.
+        if ((i >= indiceDesde && i <= indiceHasta) || i == cantEventos) {
         this.matrizEstado.push(evento);
+      }
     }
   }
 
