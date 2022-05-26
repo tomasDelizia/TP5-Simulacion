@@ -133,12 +133,10 @@ export class SimuladorColasAlternativo {
             pasajero.minutoLlegadaDeControlAEmbarque
           );
         }
-        console.log(eventosCandidatos);
         reloj = Number(Utils.getMenorMayorACero(eventosCandidatos).toFixed(4));
         tipoEvento = this.getSiguienteEvento(eventosCandidatos, reloj);
       }
 
-      console.log(tipoEvento);
       switch (tipoEvento) {
         // Inicio de la simulación.
         case EventoAlt.INICIO_SIMULACION: {

@@ -16,7 +16,11 @@ const divTablaSimulacionAlternativa: HTMLDivElement = document.getElementById('d
 
 // Definición de la tablas de simulación de colas.
 const tablaSimulacion: HTMLTableElement = document.getElementById('tablaSimulacion') as HTMLTableElement;
+const cantEncabezadosTablaSimulacion = tablaSimulacion.rows[0].cells.length;
+const cantSubEncabezadosTablaSimulacion = tablaSimulacion.rows[1].cells.length;
 const tablaSimulacionAlternativa: HTMLTableElement = document.getElementById('tablaSimulacionAlternativa') as HTMLTableElement;
+const cantEncabezadosTablaSimulacionAlt = tablaSimulacionAlternativa.rows[0].cells.length;
+const cantSubEncabezadosTablaSimulacionAlt = tablaSimulacionAlternativa.rows[1].cells.length;
 
 // Definición de botones de la interfaz de usuario.
 const btnSimular: HTMLButtonElement = document.getElementById('btnSimular') as HTMLButtonElement;
@@ -44,8 +48,9 @@ const simular = async () => {
     return;
 
   switch (cboJuntarVentanilla.value) {
+    // Simulación juntando las ventanillas de venta y facturación.
     case "1": {
-      HTMLUtils.limpiarTabla(tablaSimulacionAlternativa);
+      HTMLUtils.limpiarTabla(tablaSimulacionAlternativa, cantEncabezadosTablaSimulacionAlt, cantSubEncabezadosTablaSimulacionAlt);
       HTMLUtils.mostrarSeccion(divTablaSimulacionAlternativa);
       HTMLUtils.ocultarSeccion(divTablaSimulacion);
 
@@ -57,7 +62,6 @@ const simular = async () => {
 
       // Cargamos la tabla a mostrar.
       HTMLUtils.completarEncabezadosDeTablaAlternativa(simuladorAlternativo.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
-      HTMLUtils.limpiarTabla(tablaSimulacionAlternativa);
       for (let i: number = 0; i < matrizEstado.length; i++) {
         HTMLUtils.agregarFilaATabla(matrizEstado[i], tablaSimulacionAlternativa);
       }
@@ -65,8 +69,10 @@ const simular = async () => {
       console.log(`La simulación tardó ${endTime - startTime} milisegundos`);
       break;
     }
+
+    // Simulación con las ventanillas de venta y facturación separadas.
     case "2": {
-      HTMLUtils.limpiarTabla(tablaSimulacion);
+      HTMLUtils.limpiarTabla(tablaSimulacion, cantEncabezadosTablaSimulacion, cantSubEncabezadosTablaSimulacion);
       HTMLUtils.mostrarSeccion(divTablaSimulacion);
       HTMLUtils.ocultarSeccion(divTablaSimulacionAlternativa);
 
@@ -78,7 +84,6 @@ const simular = async () => {
 
       // Cargamos la tabla a mostrar.
       HTMLUtils.completarEncabezadosDeTabla(simulador.getCantMaxPasajerosEnSistema(), tablaSimulacion);
-      HTMLUtils.limpiarTabla(tablaSimulacion);
       for (let i: number = 0; i < matrizEstado.length; i++) {
         HTMLUtils.agregarFilaATabla(matrizEstado[i], tablaSimulacion);
       }
