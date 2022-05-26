@@ -39,8 +39,12 @@ export class PasajeroAlt {
     this.minutoLlegada = minutoLlegada;
   }
 
-  public enVentaFacturacionEquipaje(): void {
-    this.estado = EstadoPasajeroAlt.EN_VENTA_FACTURACION;
+  public enVentaFacturacionEquipajeEmp1(): void {
+    this.estado = EstadoPasajeroAlt.EN_VENTA_FACTURACION_EMP_1;
+  }
+
+  public enVentaFacturacionEquipajeEmp2(): void {
+    this.estado = EstadoPasajeroAlt.EN_VENTA_FACTURACION_EMP_2;
   }
 
   public enEsperaVentaFacturacion(): void {

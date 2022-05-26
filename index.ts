@@ -114,3 +114,16 @@ function validarParametros(): boolean {
   }
   return true;
 }
+
+
+HTMLUtils.mostrarSeccion(divTablaSimulacionAlternativa)
+
+simuladorAlternativo.simular(10, 1);
+
+let matrizEstado: any[][] = simuladorAlternativo.getMatrizEstado();
+
+HTMLUtils.completarEncabezadosDeTabla(simuladorAlternativo.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
+HTMLUtils.limpiarTabla(tablaSimulacionAlternativa);
+for (let i: number = 0; i < matrizEstado.length; i++) {
+  HTMLUtils.agregarFilaATabla(matrizEstado[i], tablaSimulacionAlternativa);
+}

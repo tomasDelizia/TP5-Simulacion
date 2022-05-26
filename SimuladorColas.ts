@@ -564,9 +564,8 @@ export class SimuladorColas {
         tipoPasajero = "";
 
         // Cargamos la matriz de estado a mostrar.
-        if ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos) {
-        this.matrizEstado.push(evento);
-      }
+        if ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos)
+          this.matrizEstado.push(evento);
     }
   }
 
