@@ -15,12 +15,10 @@ export module HTMLUtils {
     for (let i: number = tabla.rows.length; i > 2; i--)
       tabla.deleteRow(i - 1);
  
-    console.log(tabla.rows[0].cells.length)
     // Limpiamos los encabezados correspondientes a los pasajeros.
     for (let i: number = tabla.rows[0].cells.length; i > cantEncabezados; i--)
       tabla.rows[0].deleteCell(i - 1);
 
-    console.log(tabla.rows[1].cells.length)
     for (let i: number = tabla.rows[1].cells.length; i > cantSubEncabezados; i--)
       tabla.rows[1].deleteCell(i - 1);  
   }
