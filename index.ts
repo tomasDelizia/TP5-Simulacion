@@ -102,7 +102,7 @@ function validarParametros(): boolean {
   }
 
   if ( Number(cboJuntarVentanilla.value) <= 0 || Number(cboJuntarVentanilla.value) > 2) {
-    alert('Seleccione la cantidad de intervalos.');
+    alert('Seleccione si desea juntar las ventanillas.');
     return false;
   }
 
@@ -110,7 +110,7 @@ function validarParametros(): boolean {
   eventoDesde = Number(txtEventoDesde.value);
 
   if (n <= 0) {
-    alert('La cantidad de números a generar debe ser mayor a cero.');
+    alert('La cantidad de eventos a generar debe ser mayor a cero.');
     return false;
   }
   if (eventoDesde < 0 || eventoDesde > n) {

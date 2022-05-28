@@ -57,30 +57,43 @@ export module HTMLUtils {
     for (let i: number = 0; i < cantPasajeros; i++) {
       let colPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
       colPasajero.colSpan = 8;
+      colPasajero.style.fontWeight = "bold";
       colPasajero.appendChild(document.createTextNode('Pasajero N° ' + (i+1)));
 
       let colNroPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colNroPasajero.style.fontWeight = "bold";
       colNroPasajero.appendChild(document.createTextNode('ID Pasajero'));
 
       let colTipoPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colTipoPasajero.style.fontWeight = "bold";
       colTipoPasajero.appendChild(document.createTextNode('Tipo Pasajero'));
       
       let colEstadoPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colEstadoPasajero.style.fontWeight = "bold";
       colEstadoPasajero.appendChild(document.createTextNode('Estado'));
 
       let colMinutoLlegada: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegada.style.fontWeight = "bold";
       colMinutoLlegada.appendChild(document.createTextNode('Minuto llegada'));
 
       let colMinutoLlegadaDeVentaAFacturacion: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegadaDeVentaAFacturacion.style.fontWeight = "bold";
+      colMinutoLlegadaDeVentaAFacturacion.style.color = "red";
       colMinutoLlegadaDeVentaAFacturacion.appendChild(document.createTextNode('Minuto llegada de venta a facturación'));
 
       let colMinutoLlegadaDeFacturacionAControl: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegadaDeFacturacionAControl.style.fontWeight = "bold";
+      colMinutoLlegadaDeFacturacionAControl.style.color = "red";
       colMinutoLlegadaDeFacturacionAControl.appendChild(document.createTextNode('Minuto llegada de facturación a control'));
 
       let colMinutoLlegadaDeChequeoBilleteAControl: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegadaDeChequeoBilleteAControl.style.fontWeight = "bold";
+      colMinutoLlegadaDeChequeoBilleteAControl.style.color = "red";
       colMinutoLlegadaDeChequeoBilleteAControl.appendChild(document.createTextNode('Minuto llegada de chequeo a control'));
 
       let colMinutoLlegadaDeControlAEmbarque: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegadaDeControlAEmbarque.style.fontWeight = "bold";
+      colMinutoLlegadaDeControlAEmbarque.style.color = "red";
       colMinutoLlegadaDeControlAEmbarque.appendChild(document.createTextNode('Minuto llegada de control a embarque'));
     }
   } 
@@ -93,27 +106,38 @@ export module HTMLUtils {
     for (let i: number = 0; i < cantPasajeros; i++) {
       let colPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
       colPasajero.colSpan = 7;
+      colPasajero.style.fontWeight = "bold";
       colPasajero.appendChild(document.createTextNode('Pasajero N° ' + (i+1)));
 
       let colNroPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colNroPasajero.style.fontWeight = "bold";
       colNroPasajero.appendChild(document.createTextNode('ID Pasajero'));
 
       let colTipoPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colTipoPasajero.style.fontWeight = "bold";
       colTipoPasajero.appendChild(document.createTextNode('Tipo Pasajero'));
       
       let colEstadoPasajero: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colEstadoPasajero.style.fontWeight = "bold";
       colEstadoPasajero.appendChild(document.createTextNode('Estado'));
 
       let colMinutoLlegada: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegada.style.fontWeight = "bold";
       colMinutoLlegada.appendChild(document.createTextNode('Minuto llegada'));
 
       let colMinutoLlegadaDeFacturacionAControl: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegadaDeFacturacionAControl.style.fontWeight = "bold";
+      colMinutoLlegadaDeFacturacionAControl.style.color = "red";
       colMinutoLlegadaDeFacturacionAControl.appendChild(document.createTextNode('Minuto llegada de venta-facturación a control'));
 
       let colMinutoLlegadaDeChequeoBilleteAControl: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegadaDeChequeoBilleteAControl.style.fontWeight = "bold";
+      colMinutoLlegadaDeChequeoBilleteAControl.style.color = "red";
       colMinutoLlegadaDeChequeoBilleteAControl.appendChild(document.createTextNode('Minuto llegada de chequeo a control'));
 
       let colMinutoLlegadaDeControlAEmbarque: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+      colMinutoLlegadaDeControlAEmbarque.style.fontWeight = "bold";
+      colMinutoLlegadaDeControlAEmbarque.style.color = "red";
       colMinutoLlegadaDeControlAEmbarque.appendChild(document.createTextNode('Minuto llegada de control a embarque'));
     }
   }

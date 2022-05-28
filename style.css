@@ -11,6 +11,6 @@ body{
 }
 
 .scrollable {
-  height: 30rem;
+  height: 40rem;
   overflow: scroll;
 }
