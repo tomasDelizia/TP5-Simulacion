@@ -24,20 +24,11 @@ export module HTMLUtils {
   }
 
   // Agregar una fila a una tabla html a partir de un vector pasado por parámetro.
-  export function agregarFilaATabla(fila: any[], tabla: HTMLTableElement) {
-  let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
-  for (let i: number = 0; i < fila.length; i++) {
-    const valor: string = !(typeof fila[i] === 'undefined' || String(fila[i]) == 'null' || fila[i] === '') ? String(fila[i]) : '-';
-      let celda: HTMLTableDataCellElement = filaHTML.insertCell();
-      celda.appendChild(document.createTextNode(valor));
-    }
-  }
-
-  export function agregarFilaATablaColor(fila: any[], tabla: HTMLTableElement) {
+  export function agregarFilaATablaAlternativa(fila: any[], tabla: HTMLTableElement) {
     let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
     for (let i: number = 0; i < fila.length; i++) {
       const valor: string = !(typeof fila[i] === 'undefined' || String(fila[i]) == 'null' || fila[i] === '') ? String(fila[i]) : '-';
-      if (i == 5 || i == 9 || i == 11 || i == 14 || i == 16) {
+      if (i == 5 || i == 10 || i == 11 || i == 15 || i == 18) {
         let celda: HTMLTableDataCellElement = filaHTML.insertCell();
         celda.style.color = "red"
         celda.appendChild(document.createTextNode(valor));
@@ -46,8 +37,25 @@ export module HTMLUtils {
         let celda: HTMLTableDataCellElement = filaHTML.insertCell();
         celda.appendChild(document.createTextNode(valor));
         }
-      }
     }
+  }
+
+  // Agregar una fila a una tabla html a partir de un vector pasado por parámetro.
+  export function agregarFilaATabla(fila: any[], tabla: HTMLTableElement) {
+    let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
+    for (let i: number = 0; i < fila.length; i++) {
+      const valor: string = !(typeof fila[i] === 'undefined' || String(fila[i]) == 'null' || fila[i] === '') ? String(fila[i]) : '-';
+      if (i == 5 || i == 10 || i == 13 || i == 17 || i == 20) {
+        let celda: HTMLTableDataCellElement = filaHTML.insertCell();
+        celda.style.color = "red"
+        celda.appendChild(document.createTextNode(valor));
+      }
+      else {
+        let celda: HTMLTableDataCellElement = filaHTML.insertCell();
+        celda.appendChild(document.createTextNode(valor));
+        }
+    }
+  }  
 
   // Completa los encabezados de la tabla con los datos de los pasajeros.
   export function completarEncabezadosDeTabla(cantPasajeros: number, tabla: HTMLTableElement): void {

@@ -63,7 +63,7 @@ const simular = async () => {
       // Cargamos la tabla a mostrar.
       HTMLUtils.completarEncabezadosDeTablaAlternativa(simuladorAlternativo.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
       for (let i: number = 0; i < matrizEstado.length; i++) {
-        HTMLUtils.agregarFilaATabla(matrizEstado[i], tablaSimulacionAlternativa);
+        HTMLUtils.agregarFilaATablaAlternativa(matrizEstado[i], tablaSimulacionAlternativa);
       }
       var endTime = performance.now();
       console.log(`La simulación tardó ${endTime - startTime} milisegundos`);
