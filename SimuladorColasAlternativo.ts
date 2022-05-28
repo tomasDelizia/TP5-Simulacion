@@ -502,14 +502,14 @@ export class SimuladorColasAlternativo {
             );
         }
 
-        if (pasajerosEnSistema.length > this.cantMaxPasajeros)
+        if ((pasajerosEnSistema.length > this.cantMaxPasajeros) && ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos-1))
           this.cantMaxPasajeros = pasajerosEnSistema.length;
        
         rndTipoPasajero = null;
         tipoPasajero = "";
 
         // Cargamos la matriz de estado a mostrar.
-        if ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos)
+        if ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos-1)
           this.matrizEstado.push(evento);
     }
   }
