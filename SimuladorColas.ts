@@ -379,9 +379,9 @@ export class SimuladorColas {
             empleadoFacturacion.ocupado();
 
             // Generamos el tiempo de facturación.
-            rndFacturacion = Math.random();
-            tiempoFacturacion = this.getTiempoFacturacion(rndFacturacion);
-            finFacturacion = reloj + tiempoFacturacion;
+            rndFacturacion = Number(Math.random().toFixed(4));
+            tiempoFacturacion = Number(this.getTiempoFacturacion(rndFacturacion).toFixed(4));
+            finFacturacion = Number((reloj + tiempoFacturacion).toFixed(4));
           }
           else {
             pasajero.enEsperaFacturacion();
@@ -404,9 +404,9 @@ export class SimuladorColas {
             acuTiempoOciosoEmpControl += reloj - minutoTiempoOciosoEmpControlDesde;
 
             // Generamos el tiempo de facturación.
-            rndControlMetales = Math.random();
-            tiempoControlMetales = this.getTiempoFacturacion(rndControlMetales);
-            finControlMetales = reloj + tiempoControlMetales;
+            rndControlMetales = Number(Math.random().toFixed(4));
+            tiempoControlMetales = Number(this.getTiempoFacturacion(rndControlMetales).toFixed(4));
+            finControlMetales = Number((reloj + tiempoControlMetales).toFixed(4));
           }
           else {
             pasajero.enEsperaControlMetales();
@@ -430,9 +430,9 @@ export class SimuladorColas {
             acuTiempoOciosoEmpControl += reloj - minutoTiempoOciosoEmpControlDesde;
 
             // Generamos el tiempo de facturación.
-            rndControlMetales = Math.random();
-            tiempoControlMetales = this.getTiempoFacturacion(rndControlMetales);
-            finControlMetales = reloj + tiempoControlMetales;
+            rndControlMetales = Number(Math.random().toFixed(4));
+            tiempoControlMetales = Number(this.getTiempoFacturacion(rndControlMetales).toFixed(4));
+            finControlMetales = Number((reloj + tiempoControlMetales).toFixed(4));
           }
           else {
             pasajero.enEsperaControlMetales();

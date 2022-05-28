@@ -359,9 +359,9 @@ export class SimuladorColasAlternativo {
             acuTiempoOciosoEmpControl += reloj - minutoTiempoOciosoEmpControlDesde;
 
             // Generamos el tiempo de facturación.
-            rndControlMetales = Math.random();
-            tiempoControlMetales = this.getTiempoVentaFacturacion(rndControlMetales);
-            finControlMetales = reloj + tiempoControlMetales;
+            rndControlMetales = Number(Math.random().toFixed(4));
+            tiempoControlMetales = Number(this.getTiempoVentaFacturacion(rndControlMetales).toFixed(4));
+            finControlMetales = Number((reloj + tiempoControlMetales).toFixed(4));
           }
           else {
             pasajero.enEsperaControlMetales();
@@ -385,9 +385,9 @@ export class SimuladorColasAlternativo {
             acuTiempoOciosoEmpControl += reloj - minutoTiempoOciosoEmpControlDesde;
 
             // Generamos el tiempo de facturación.
-            rndControlMetales = Math.random();
-            tiempoControlMetales = this.getTiempoVentaFacturacion(rndControlMetales);
-            finControlMetales = reloj + tiempoControlMetales;
+            rndControlMetales = Number(Math.random().toFixed(4));
+            tiempoControlMetales = Number(this.getTiempoVentaFacturacion(rndControlMetales).toFixed(4));
+            finControlMetales = Number((reloj + tiempoControlMetales).toFixed(4));
           }
           else {
             pasajero.enEsperaControlMetales();
