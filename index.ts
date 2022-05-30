@@ -66,9 +66,7 @@ const simular = async () => {
       // Cargamos la tabla a mostrar.
       startTime = performance.now()
       HTMLUtils.completarEncabezadosDeTablaAlternativa(simuladorAlternativo.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
-      for (let i: number = 0; i < matrizEstado.length; i++) {
-        HTMLUtils.agregarFilaATablaAlternativa(matrizEstado[i], tablaSimulacionAlternativa);
-      }
+      HTMLUtils.cargarTabla(matrizEstado, tablaSimulacionAlternativa);
       console.log(`La renderización tardó ${performance.now() - startTime} milisegundos`);
       break;
     }
@@ -91,9 +89,7 @@ const simular = async () => {
       // Cargamos la tabla a mostrar.
       startTime = performance.now()
       HTMLUtils.completarEncabezadosDeTabla(simulador.getCantMaxPasajerosEnSistema(), tablaSimulacion);
-      for (let i: number = 0; i < matrizEstado.length; i++) {
-        HTMLUtils.agregarFilaATabla(matrizEstado[i], tablaSimulacion);
-      }
+      HTMLUtils.cargarTabla(matrizEstado, tablaSimulacion);
       console.log(`La renderización tardó ${performance.now() - startTime} milisegundos`);
       break;
     }
