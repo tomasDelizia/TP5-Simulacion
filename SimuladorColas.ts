@@ -477,73 +477,75 @@ export class SimuladorColas {
         cantMaxPasajerosEnAlgunaCola
       );
 
-      evento.push(
-        i,
-        Evento[tipoEvento],
-        reloj,
-
-        rndLlegada,
-        tiempoEntreLlegadas,
-        proximaLlegada,
-        rndTipoPasajero,
-        tipoPasajero,
-
-        rndFacturacion,
-        tiempoFacturacion,
-        finFacturacion,
-
-        rndVentaBillete,
-        tiempoVentaBillete,
-        finVentaBillete,
-
-        rnd1ChequeoBillete,
-        rnd2ChequeoBillete,
-        tiempoChequeoBillete,
-        finChequeoBillete,
-
-        rndControlMetales,
-        tiempoControlMetales,
-        finControlMetales,
-
-        rndPaseEntreVentaYFacturacion,
-        tiempoPaseEntreVentaYFacturacion,
-        finPaseEntreVentaYFacturacion,
-
-        rndPaseEntreFacturacionYControl,
-        tiempoPaseEntreFacturacionYControl,
-        finPaseEntreFacturacionYControl,
-
-        rndPaseEntreChequeoYControl,
-        tiempoPaseEntreChequeoYControl,
-        finPaseEntreChequeoYControl,
-
-        rndPaseEntreControlYEmbarque,
-        tiempoPaseEntreControlYEmbarque,
-        finPaseEntreControlYEmbarque,
-
-        empleadoFacturacion.getEstado(),
-        colaFacturacion.length,
-
-        empleadoVentaBillete.getEstado(),
-        colaVentaBillete.length,
-
-        empleadoChequeoBillete.getEstado(),
-        colaChequeoBillete.length,
-
-        empleadoControlMetales.getEstado(),
-        colaControlMetales.length,
-
-        totalPasajerosA,
-        totalPasajerosB,
-        totalPasajerosC,
-        totalPasajeros,
-        Number(acuTiempoPasajeros.toFixed(4)),
-        Number(acuTiempoOciosoEmpControl.toFixed(4)),
-        cantPasajerosAtentidosPorVenta,
-        cantMaxPasajerosEnAlgunaCola,
-        totalPasajerosEnColaControl
+      // Cargamos la matriz de estado a mostrar solo para el rango pasado por parámetro.
+      if ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos-1) {
+        evento.push(
+          i,
+          Evento[tipoEvento],
+          reloj,
+    
+          rndLlegada,
+          tiempoEntreLlegadas,
+          proximaLlegada,
+          rndTipoPasajero,
+          tipoPasajero,
+    
+          rndFacturacion,
+          tiempoFacturacion,
+          finFacturacion,
+    
+          rndVentaBillete,
+          tiempoVentaBillete,
+          finVentaBillete,
+    
+          rnd1ChequeoBillete,
+          rnd2ChequeoBillete,
+          tiempoChequeoBillete,
+          finChequeoBillete,
+    
+          rndControlMetales,
+          tiempoControlMetales,
+          finControlMetales,
+    
+          rndPaseEntreVentaYFacturacion,
+          tiempoPaseEntreVentaYFacturacion,
+          finPaseEntreVentaYFacturacion,
+    
+          rndPaseEntreFacturacionYControl,
+          tiempoPaseEntreFacturacionYControl,
+          finPaseEntreFacturacionYControl,
+    
+          rndPaseEntreChequeoYControl,
+          tiempoPaseEntreChequeoYControl,
+          finPaseEntreChequeoYControl,
+    
+          rndPaseEntreControlYEmbarque,
+          tiempoPaseEntreControlYEmbarque,
+          finPaseEntreControlYEmbarque,
+    
+          empleadoFacturacion.getEstado(),
+          colaFacturacion.length,
+    
+          empleadoVentaBillete.getEstado(),
+          colaVentaBillete.length,
+    
+          empleadoChequeoBillete.getEstado(),
+          colaChequeoBillete.length,
+    
+          empleadoControlMetales.getEstado(),
+          colaControlMetales.length,
+    
+          totalPasajerosA,
+          totalPasajerosB,
+          totalPasajerosC,
+          totalPasajeros,
+          Number(acuTiempoPasajeros.toFixed(4)),
+          Number(acuTiempoOciosoEmpControl.toFixed(4)),
+          cantPasajerosAtentidosPorVenta,
+          cantMaxPasajerosEnAlgunaCola,
+          totalPasajerosEnColaControl
         );
-
+    
         for (let i: number = 0; i < pasajerosEnSistema.length; i++) {
           evento.push(
             pasajerosEnSistema[i].getId(),
@@ -554,18 +556,19 @@ export class SimuladorColas {
             pasajerosEnSistema[i].minutoLlegadaDeFacturacionAControl,
             pasajerosEnSistema[i].minutoLlegadaDeChequeoBilleteAControl,
             pasajerosEnSistema[i].minutoLlegadaDeControlAEmbarque,
-            );
+          );
         }
 
-        if ((pasajerosEnSistema.length > this.cantMaxPasajeros) && ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos-1))
-          this.cantMaxPasajeros = pasajerosEnSistema.length;
-       
-        rndTipoPasajero = null;
-        tipoPasajero = "";
+        this.matrizEstado.push(evento);
 
-        // Cargamos la matriz de estado a mostrar.
-        if ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos-1)
-          this.matrizEstado.push(evento);
+        // Actualizamos la cantidad de pasajeros máximos que hubo en el sistema.
+        if (pasajerosEnSistema.length > this.cantMaxPasajeros)
+          this.cantMaxPasajeros = pasajerosEnSistema.length;
+      }
+
+      // Reseteamos algunas variables.
+      rndTipoPasajero = null;
+      tipoPasajero = "";
     }
   }
 

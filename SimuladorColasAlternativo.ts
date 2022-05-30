@@ -432,64 +432,66 @@ export class SimuladorColasAlternativo {
         cantMaxPasajerosEnAlgunaCola
       );
 
-      evento.push(
-        i,
-        EventoAlt[tipoEvento],
-        reloj,
-
-        rndLlegada,
-        tiempoEntreLlegadas,
-        proximaLlegada,
-        rndTipoPasajero,
-        tipoPasajero,
-
-        rndVentaFacturacion,
-        tiempoVentaFacturacion,
-        finVentaFacturacionEmp1,
-        finVentaFacturacionEmp2,
-
-        rnd1ChequeoBillete,
-        rnd2ChequeoBillete,
-        tiempoChequeoBillete,
-        finChequeoBillete,
-
-        rndControlMetales,
-        tiempoControlMetales,
-        finControlMetales,
-
-        rndPaseEntreVentaFacturacionYControl,
-        tiempoPaseEntreVentaFacturacionYControl,
-        finPaseEntreVentaFacturacionYControl,
-
-        rndPaseEntreChequeoYControl,
-        tiempoPaseEntreChequeoYControl,
-        finPaseEntreChequeoYControl,
-
-        rndPaseEntreControlYEmbarque,
-        tiempoPaseEntreControlYEmbarque,
-        finPaseEntreControlYEmbarque,
-
-        empleado1VentaFacturacion.getEstado(),
-        empleado2VentaFacturacion.getEstado(),
-        colaVentaFacturacion.length,
-
-        empleadoChequeoBillete.getEstado(),
-        colaChequeoBillete.length,
-
-        empleadoControlMetales.getEstado(),
-        colaControlMetales.length,
-
-        totalPasajerosA,
-        totalPasajerosB,
-        totalPasajerosC,
-        totalPasajeros,
-        Number(acuTiempoPasajeros.toFixed(4)),
-        Number(acuTiempoOciosoEmpControl.toFixed(4)),
-        cantPasajerosAtentidosPorVentaFacturacion,
-        cantMaxPasajerosEnAlgunaCola,
-        totalPasajerosEnColaControl
+      // Cargamos la matriz de estado a mostrar solo para el rango pasado por parámetro.
+      if ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos-1) {
+        evento.push(
+          i,
+          EventoAlt[tipoEvento],
+          reloj,
+  
+          rndLlegada,
+          tiempoEntreLlegadas,
+          proximaLlegada,
+          rndTipoPasajero,
+          tipoPasajero,
+  
+          rndVentaFacturacion,
+          tiempoVentaFacturacion,
+          finVentaFacturacionEmp1,
+          finVentaFacturacionEmp2,
+  
+          rnd1ChequeoBillete,
+          rnd2ChequeoBillete,
+          tiempoChequeoBillete,
+          finChequeoBillete,
+  
+          rndControlMetales,
+          tiempoControlMetales,
+          finControlMetales,
+  
+          rndPaseEntreVentaFacturacionYControl,
+          tiempoPaseEntreVentaFacturacionYControl,
+          finPaseEntreVentaFacturacionYControl,
+  
+          rndPaseEntreChequeoYControl,
+          tiempoPaseEntreChequeoYControl,
+          finPaseEntreChequeoYControl,
+  
+          rndPaseEntreControlYEmbarque,
+          tiempoPaseEntreControlYEmbarque,
+          finPaseEntreControlYEmbarque,
+  
+          empleado1VentaFacturacion.getEstado(),
+          empleado2VentaFacturacion.getEstado(),
+          colaVentaFacturacion.length,
+  
+          empleadoChequeoBillete.getEstado(),
+          colaChequeoBillete.length,
+  
+          empleadoControlMetales.getEstado(),
+          colaControlMetales.length,
+  
+          totalPasajerosA,
+          totalPasajerosB,
+          totalPasajerosC,
+          totalPasajeros,
+          Number(acuTiempoPasajeros.toFixed(4)),
+          Number(acuTiempoOciosoEmpControl.toFixed(4)),
+          cantPasajerosAtentidosPorVentaFacturacion,
+          cantMaxPasajerosEnAlgunaCola,
+          totalPasajerosEnColaControl
         );
-
+  
         for (let i: number = 0; i < pasajerosEnSistema.length; i++) {
           evento.push(
             pasajerosEnSistema[i].getId(),
@@ -502,15 +504,16 @@ export class SimuladorColasAlternativo {
             );
         }
 
-        if ((pasajerosEnSistema.length > this.cantMaxPasajeros) && ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos-1))
-          this.cantMaxPasajeros = pasajerosEnSistema.length;
-       
-        rndTipoPasajero = null;
-        tipoPasajero = "";
+        this.matrizEstado.push(evento);
 
-        // Cargamos la matriz de estado a mostrar.
-        if ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos-1)
-          this.matrizEstado.push(evento);
+        // Actualizamos la cantidad de pasajeros máximos que hubo en el sistema.
+        if (pasajerosEnSistema.length > this.cantMaxPasajeros)
+          this.cantMaxPasajeros = pasajerosEnSistema.length;
+      }
+
+      // Reseteamos algunas variables.
+      rndTipoPasajero = null;
+      tipoPasajero = "";
     }
   }
 

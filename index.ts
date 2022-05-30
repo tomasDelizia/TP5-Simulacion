@@ -50,45 +50,51 @@ const simular = async () => {
   switch (cboJuntarVentanilla.value) {
     // Simulación juntando las ventanillas de venta y facturación.
     case "1": {
+      var startTime = performance.now()
       HTMLUtils.limpiarTabla(tablaSimulacionAlternativa, cantEncabezadosTablaSimulacionAlt, cantSubEncabezadosTablaSimulacionAlt);
       HTMLUtils.mostrarSeccion(divTablaSimulacionAlternativa);
       HTMLUtils.ocultarSeccion(divTablaSimulacion);
+      console.log(`La limpieza tardó ${performance.now() - startTime} milisegundos`);
 
       // Realizamos la simulación alternativa.
-      var startTime = performance.now()
+      startTime = performance.now()
       await simuladorAlternativo.simular(n, eventoDesde);
+      console.log(`La simulación tardó ${performance.now() - startTime} milisegundos`);
 
       let matrizEstado: any[][] = simuladorAlternativo.getMatrizEstado();
 
       // Cargamos la tabla a mostrar.
+      startTime = performance.now()
       HTMLUtils.completarEncabezadosDeTablaAlternativa(simuladorAlternativo.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
       for (let i: number = 0; i < matrizEstado.length; i++) {
         HTMLUtils.agregarFilaATablaAlternativa(matrizEstado[i], tablaSimulacionAlternativa);
       }
-      var endTime = performance.now();
-      console.log(`La simulación tardó ${endTime - startTime} milisegundos`);
+      console.log(`La renderización tardó ${performance.now() - startTime} milisegundos`);
       break;
     }
 
     // Simulación con las ventanillas de venta y facturación separadas.
     case "2": {
+      var startTime = performance.now();
       HTMLUtils.limpiarTabla(tablaSimulacion, cantEncabezadosTablaSimulacion, cantSubEncabezadosTablaSimulacion);
       HTMLUtils.mostrarSeccion(divTablaSimulacion);
       HTMLUtils.ocultarSeccion(divTablaSimulacionAlternativa);
+      console.log(`La limpieza tardó ${performance.now() - startTime} milisegundos`);
 
       // Realizamos la simulación.
-      var startTime = performance.now()
+      startTime = performance.now()
       await simulador.simular(n, eventoDesde);
+      console.log(`La simulación tardó ${performance.now() - startTime} milisegundos`);
 
       let matrizEstado: any[][] = simulador.getMatrizEstado();
 
       // Cargamos la tabla a mostrar.
+      startTime = performance.now()
       HTMLUtils.completarEncabezadosDeTabla(simulador.getCantMaxPasajerosEnSistema(), tablaSimulacion);
       for (let i: number = 0; i < matrizEstado.length; i++) {
         HTMLUtils.agregarFilaATabla(matrizEstado[i], tablaSimulacion);
       }
-      var endTime = performance.now();
-      console.log(`La simulación tardó ${endTime - startTime} milisegundos`);
+      console.log(`La renderización tardó ${performance.now() - startTime} milisegundos`);
       break;
     }
   }
