@@ -23,12 +23,14 @@ export module HTMLUtils {
       tabla.rows[1].deleteCell(i - 1);  
   }
 
-  export function crearFila(fila: any[], tabla: HTMLTableElement): string {
+  // Crea una fila a una tabla html a partir de un vector pasado por parámetro.
+  export function crearFila(fila: any[], indicesColor: number[]): string {
     let filaHTML: string = "<tr>";
     for (let i: number = 0; i < fila.length; i++) {
       let celdaHTML: string = "<td";
-      if (i == 5 || i == 10 || i == 13 || i == 17 || i == 20) {
-        celdaHTML += " style: {color: red}"
+      for (let j: number = 0; j < indicesColor.length; j++) {
+        if (i == indicesColor[j])
+          celdaHTML += ' style="color: red"';
       }
       celdaHTML += ">";
       const valor: string = !(typeof fila[i] === 'undefined' || String(fila[i]) == 'null' || fila[i] === '') ? String(fila[i]) : '-';
@@ -39,61 +41,41 @@ export module HTMLUtils {
     return filaHTML;
   }
 
-   // Agregar una fila a una tabla html a partir de un vector pasado por parámetro.
-   export function agregarFilaATabla(fila: any[], tabla: HTMLTableElement) {
-     let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
-     for (let i: number = 0; i < fila.length; i++) {
-       const valor: string = !(typeof fila[i] === 'undefined' || String(fila[i]) == 'null' || fila[i] === '') ? String(fila[i]) : '-';
-       if (i == 5 || i == 10 || i == 13 || i == 17 || i == 20) {
-         let celda: HTMLTableDataCellElement = filaHTML.insertCell();
-         celda.style.color = "red"
-         celda.appendChild(document.createTextNode(valor));
-       }
-       else {
-         let celda: HTMLTableDataCellElement = filaHTML.insertCell();
-         celda.appendChild(document.createTextNode(valor));
-         }
-     }
-   }
+  // Carga de tabla html.
+  export function llenarTabla(matriz: any[][], indicesColor: number[], tabla: HTMLTableElement): void {
+    tabla.hidden = true;
+    let bodyTabla: string = "";
+    for (let i: number = 0; i < matriz.length; i++) {
+      let filaHTML: string = crearFila(matriz[i], indicesColor);
+      bodyTabla += filaHTML;
+    }
+    tabla.tBodies[0].innerHTML = bodyTabla;
+    tabla.hidden = false;
+  }
 
-  // Agregar una fila a una tabla html a partir de un vector pasado por parámetro.
-  export function agregarFilaATablaAlternativa(fila: any[], tabla: HTMLTableElement) {
-    let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
-    for (let i: number = 0; i < fila.length; i++) {
-      const valor: string = !(typeof fila[i] === 'undefined' || String(fila[i]) == 'null' || fila[i] === '') ? String(fila[i]) : '-';
-      if (i == 5 || i == 10 || i == 11 || i == 15 || i == 18) {
-        let celda: HTMLTableDataCellElement = filaHTML.insertCell();
-        celda.style.color = "red"
-        celda.appendChild(document.createTextNode(valor));
+  // Completa los encabezados de la tabla con los datos de los pasajeros.
+  export function completarEncabezadosPasajeros(cantPasajeros: number, tabla: HTMLTableElement, columnas: string[]): void {
+    let encabezados: HTMLTableRowElement = tabla.rows[0];
+    let subEncabezados: HTMLTableRowElement = tabla.rows[1];
+
+    for (let i: number = 0; i < cantPasajeros; i++) {
+      let col: HTMLTableHeaderCellElement = encabezados.insertCell();
+      col.colSpan = columnas.length;
+      col.style.fontWeight = "bold";
+      col.appendChild(document.createTextNode('Pasajero N° ' + (i+1)));
+
+      for (let j: number = 0; j < columnas.length; j++) {
+        let subCol: HTMLTableHeaderCellElement = subEncabezados.insertCell();
+        subCol.style.fontWeight = "bold";
+        subCol.appendChild(document.createTextNode(columnas[j]));
       }
-      else {
-        let celda: HTMLTableDataCellElement = filaHTML.insertCell();
-        celda.appendChild(document.createTextNode(valor));
-        }
     }
-  }
-
-  export function cargarTabla(matriz: any[][], tabla: HTMLTableElement): void {
-    tabla.hidden = true;
-    for (let i: number = 0; i < matriz.length; i++) {
-      HTMLUtils.agregarFilaATabla(matriz[i], tabla);
-    }
-    tabla.hidden = false;
-  }
-
-  export function cargarTablaAlternativa(matriz: any[][], tabla: HTMLTableElement): void {
-    tabla.hidden = true;
-    for (let i: number = 0; i < matriz.length; i++) {
-      HTMLUtils.agregarFilaATablaAlternativa(matriz[i], tabla);
-    }
-    tabla.hidden = false;
   }
 
   // Completa los encabezados de la tabla con los datos de los pasajeros.
   export function completarEncabezadosDeTabla(cantPasajeros: number, tabla: HTMLTableElement): void {
     let encabezados: HTMLTableRowElement = tabla.rows[0];
     let subEncabezados: HTMLTableRowElement = tabla.rows[1];
-
     for (let i: number = 0; i < cantPasajeros; i++) {
       let colPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
       colPasajero.colSpan = 8;
@@ -142,7 +124,6 @@ export module HTMLUtils {
   export function completarEncabezadosDeTablaAlternativa(cantPasajeros: number, tabla: HTMLTableElement): void {
     let encabezados: HTMLTableRowElement = tabla.rows[0];
     let subEncabezados: HTMLTableRowElement = tabla.rows[1];
-
     for (let i: number = 0; i < cantPasajeros; i++) {
       let colPasajero: HTMLTableHeaderCellElement = encabezados.insertCell();
       colPasajero.colSpan = 7;

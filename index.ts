@@ -1,4 +1,5 @@
 import { HTMLUtils } from './HTMLUtils';
+import { Simulador } from './Simulador';
 import { SimuladorColas } from './SimuladorColas';
 import { SimuladorColasAlternativo } from './SimuladorColasAlternativo';
 import './style.css';
@@ -21,13 +22,17 @@ const cantSubEncabezadosTablaSimulacion = tablaSimulacion.rows[1].cells.length;
 const tablaSimulacionAlternativa: HTMLTableElement = document.getElementById('tablaSimulacionAlternativa') as HTMLTableElement;
 const cantEncabezadosTablaSimulacionAlt = tablaSimulacionAlternativa.rows[0].cells.length;
 const cantSubEncabezadosTablaSimulacionAlt = tablaSimulacionAlternativa.rows[1].cells.length;
+const indicesEventosCandidatos: number[] = [5, 10, 13, 17, 20];
+const indicesEventosCandidatosAlt: number[] = [5, 10, 11, 15, 18];
+const colPasajeros: string[] = ['ID Pasajero', 'Tipo Pasajero', 'Estado', 'Minuto llegada', 'Minuto llegada de venta a facturación', 'Minuto llegada de facturación a control', 'Minuto llegada de chequeo a control', 'Minuto llegada de control a embarque'];
+const colPasajerosAlt: string[] = ['ID Pasajero', 'Tipo Pasajero', 'Estado', 'Minuto llegada', 'Minuto llegada de venta-facturación a control', 'Minuto llegada de chequeo a control', 'Minuto llegada de control a embarque'];
 
 // Definición de botones de la interfaz de usuario.
 const btnSimular: HTMLButtonElement = document.getElementById('btnSimular') as HTMLButtonElement;
 
 // Definición de los objetos que realizan la simulación de colas.
-const simulador: SimuladorColas = new SimuladorColas();
-const simuladorAlternativo: SimuladorColasAlternativo = new SimuladorColasAlternativo();
+let simulador: Simulador;
+let matrizEstado: any[][];
 
 // Definición de los parámetros.
 let n: number;
@@ -57,16 +62,18 @@ const simular = async () => {
       console.log(`La limpieza tardó ${performance.now() - startTime} milisegundos`);
 
       // Realizamos la simulación alternativa.
-      startTime = performance.now()
-      await simuladorAlternativo.simular(n, eventoDesde);
+      startTime = performance.now();
+      simulador = new SimuladorColasAlternativo();
+      await simulador.simular(n, eventoDesde);
       console.log(`La simulación tardó ${performance.now() - startTime} milisegundos`);
 
-      let matrizEstado: any[][] = simuladorAlternativo.getMatrizEstado();
+      matrizEstado = simulador.getMatrizEstado();
 
       // Cargamos la tabla a mostrar.
       startTime = performance.now()
-      HTMLUtils.completarEncabezadosDeTablaAlternativa(simuladorAlternativo.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
-      HTMLUtils.cargarTabla(matrizEstado, tablaSimulacionAlternativa);
+      HTMLUtils.completarEncabezadosDeTablaAlternativa(simulador.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
+      // HTMLUtils.cargarTabla(matrizEstado, tablaSimulacionAlternativa);
+      HTMLUtils.llenarTabla(matrizEstado, indicesEventosCandidatosAlt, tablaSimulacionAlternativa);
       console.log(`La renderización tardó ${performance.now() - startTime} milisegundos`);
       break;
     }
@@ -80,16 +87,18 @@ const simular = async () => {
       console.log(`La limpieza tardó ${performance.now() - startTime} milisegundos`);
 
       // Realizamos la simulación.
-      startTime = performance.now()
+      startTime = performance.now();
+      simulador = new SimuladorColas();
       await simulador.simular(n, eventoDesde);
       console.log(`La simulación tardó ${performance.now() - startTime} milisegundos`);
 
-      let matrizEstado: any[][] = simulador.getMatrizEstado();
+      matrizEstado = simulador.getMatrizEstado();
 
       // Cargamos la tabla a mostrar.
-      startTime = performance.now()
+      startTime = performance.now();
       HTMLUtils.completarEncabezadosDeTabla(simulador.getCantMaxPasajerosEnSistema(), tablaSimulacion);
-      HTMLUtils.cargarTabla(matrizEstado, tablaSimulacion);
+      // HTMLUtils.cargarTabla(matrizEstado, tablaSimulacion);
+      HTMLUtils.llenarTabla(matrizEstado, indicesEventosCandidatos, tablaSimulacion);
       console.log(`La renderización tardó ${performance.now() - startTime} milisegundos`);
       break;
     }
