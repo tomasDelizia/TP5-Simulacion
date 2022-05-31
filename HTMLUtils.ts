@@ -23,6 +23,22 @@ export module HTMLUtils {
       tabla.rows[1].deleteCell(i - 1);  
   }
 
+  export function crearFila(fila: any[], tabla: HTMLTableElement): string {
+    let filaHTML: string = "<tr>";
+    for (let i: number = 0; i < fila.length; i++) {
+      let celdaHTML: string = "<td";
+      if (i == 5 || i == 10 || i == 13 || i == 17 || i == 20) {
+        celdaHTML += " style: {color: red}"
+      }
+      celdaHTML += ">";
+      const valor: string = !(typeof fila[i] === 'undefined' || String(fila[i]) == 'null' || fila[i] === '') ? String(fila[i]) : '-';
+      celdaHTML += valor + "</td>";
+      filaHTML += celdaHTML;
+    }
+    filaHTML += "</tr>"
+    return filaHTML;
+  }
+
    // Agregar una fila a una tabla html a partir de un vector pasado por parámetro.
    export function agregarFilaATabla(fila: any[], tabla: HTMLTableElement) {
      let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
