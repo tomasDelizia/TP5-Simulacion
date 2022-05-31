@@ -33,6 +33,7 @@ const btnSimular: HTMLButtonElement = document.getElementById('btnSimular') as H
 // Definición de los objetos que realizan la simulación de colas.
 let simulador: Simulador;
 let matrizEstado: any[][];
+let cantMaxPasajeros: number;
 
 // Definición de los parámetros.
 let n: number;
@@ -68,11 +69,11 @@ const simular = async () => {
       console.log(`La simulación tardó ${performance.now() - startTime} milisegundos`);
 
       matrizEstado = simulador.getMatrizEstado();
-
+      cantMaxPasajeros = simulador.getCantMaxPasajerosEnSistema();
+      
       // Cargamos la tabla a mostrar.
       startTime = performance.now()
-      HTMLUtils.completarEncabezadosDeTablaAlternativa(simulador.getCantMaxPasajerosEnSistema(), tablaSimulacionAlternativa);
-      // HTMLUtils.cargarTabla(matrizEstado, tablaSimulacionAlternativa);
+      HTMLUtils.completarEncabezadosPasajeros(cantMaxPasajeros, tablaSimulacionAlternativa, colPasajerosAlt);
       HTMLUtils.llenarTabla(matrizEstado, indicesEventosCandidatosAlt, tablaSimulacionAlternativa);
       console.log(`La renderización tardó ${performance.now() - startTime} milisegundos`);
       break;
@@ -93,11 +94,11 @@ const simular = async () => {
       console.log(`La simulación tardó ${performance.now() - startTime} milisegundos`);
 
       matrizEstado = simulador.getMatrizEstado();
+      cantMaxPasajeros = simulador.getCantMaxPasajerosEnSistema();
 
       // Cargamos la tabla a mostrar.
       startTime = performance.now();
-      HTMLUtils.completarEncabezadosDeTabla(simulador.getCantMaxPasajerosEnSistema(), tablaSimulacion);
-      // HTMLUtils.cargarTabla(matrizEstado, tablaSimulacion);
+      HTMLUtils.completarEncabezadosPasajeros(cantMaxPasajeros, tablaSimulacion, colPasajeros);
       HTMLUtils.llenarTabla(matrizEstado, indicesEventosCandidatos, tablaSimulacion);
       console.log(`La renderización tardó ${performance.now() - startTime} milisegundos`);
       break;
