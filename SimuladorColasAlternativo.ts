@@ -2,30 +2,13 @@ import { Empleado } from "./Empleado";
 import { EstadoPasajeroAlt } from "./EstadoPasajeroAlt";
 import { EventoAlt } from "./EventoAlt";
 import { PasajeroAlt } from "./PasajeroAlt";
+import { Simulador } from "./Simulador";
 import { Utils } from "./Utils";
 
-export class SimuladorColasAlternativo {
-  private mediaTiempoEntreLlegadas: number = 3.4474;
-  
-  private aTiempoFacturacion: number = 2;
-  private bTiempoFacturacion: number = 5;
+export class SimuladorColasAlternativo extends Simulador {
 
-  private mediaTiempoVentaBilletes: number = 6.858;
-
-  private mediaTiempoChequeoBilletes: number = 1;
-  private desviacionTiempoChequeoBilletes: number = 0.5;
-  
-  private mediaTiempoControlMetales: number = 2;
-
-  private mediaTiempoPasoEntreZonas: number = 2;
-
-  private matrizEstado: any[][];
-
-  private cantMaxPasajeros: number;
-
-  private probTiposPasajeros: number[] = [0.45, 1];
-
-  public async simular(cantEventos: number, eventoDesde: number): Promise<void> {
+  public simular(cantEventos: number, eventoDesde: number): void {
+    this.probTiposPasajeros = [0.45, 1];
     this.matrizEstado = [];
 
     // Definimos el rango de filas que vamos a mostrar.
@@ -34,49 +17,49 @@ export class SimuladorColasAlternativo {
       indiceHasta = cantEventos;
 
     // Vector de estado.
-    let evento: any[] = [];
+    let evento: string[] = [];
 
     let tipoEvento: EventoAlt;
     let reloj: number = 0;
 
     // Llegada de un pasajero.
-    let rndLlegada: number;
-    let tiempoEntreLlegadas: number;
-    let proximaLlegada: number;
-    let rndTipoPasajero: number;
-    let tipoPasajero: string;
+    let rndLlegada: number = -1;
+    let tiempoEntreLlegadas: number = -1;
+    let proximaLlegada: number = -1;
+    let rndTipoPasajero: number = -1;
+    let tipoPasajero: string = '';
 
     // Facturación y venta de pasajero.
-    let rndVentaFacturacion: number;
-    let tiempoVentaFacturacion: number;
-    let finVentaFacturacionEmp1: number;
-    let finVentaFacturacionEmp2: number;
+    let rndVentaFacturacion: number = -1;
+    let tiempoVentaFacturacion: number = -1;
+    let finVentaFacturacionEmp1: number = -1;
+    let finVentaFacturacionEmp2: number = -1;
 
     // Chequeo billete.
-    let rnd1ChequeoBillete: number;
-    let rnd2ChequeoBillete: number;
-    let tiempoChequeoBillete: number;
-    let finChequeoBillete: number;
+    let rnd1ChequeoBillete: number = -1;
+    let rnd2ChequeoBillete: number = -1;
+    let tiempoChequeoBillete: number = -1;
+    let finChequeoBillete: number = -1;
 
     // Control de metales.
-    let rndControlMetales: number;
-    let tiempoControlMetales: number;
-    let finControlMetales: number;
+    let rndControlMetales: number = -1;
+    let tiempoControlMetales: number = -1;
+    let finControlMetales: number = -1;
 
     // Pase entre zonas: Venta-facturación y control.
-    let rndPaseEntreVentaFacturacionYControl: number;
-    let tiempoPaseEntreVentaFacturacionYControl: number;
-    let finPaseEntreVentaFacturacionYControl: number;
+    let rndPaseEntreVentaFacturacionYControl: number = -1;
+    let tiempoPaseEntreVentaFacturacionYControl: number = -1;
+    let finPaseEntreVentaFacturacionYControl: number = -1;
 
     // Pase entre zonas: Chequeo y control.
-    let rndPaseEntreChequeoYControl: number;
-    let tiempoPaseEntreChequeoYControl: number;
-    let finPaseEntreChequeoYControl: number;
+    let rndPaseEntreChequeoYControl: number = -1;
+    let tiempoPaseEntreChequeoYControl: number = -1;
+    let finPaseEntreChequeoYControl: number = -1;
 
     // Pase entre zonas: Control y embarque.
-    let rndPaseEntreControlYEmbarque: number;
-    let tiempoPaseEntreControlYEmbarque: number;
-    let finPaseEntreControlYEmbarque: number;
+    let rndPaseEntreControlYEmbarque: number = -1;
+    let tiempoPaseEntreControlYEmbarque: number = -1;
+    let finPaseEntreControlYEmbarque: number = -1;
 
     // Empleados de venta-facturación.
     let empleado1VentaFacturacion = new Empleado();
@@ -104,7 +87,7 @@ export class SimuladorColasAlternativo {
     let acuTiempoOciosoEmpControl: number = 0;
     let cantPasajerosAtentidosPorVentaFacturacion: number = 0;
     let cantMaxPasajerosEnAlgunaCola: number = 0;
-    let totalPasajerosEnColaControl: number = 0;
+    let cantMaxPasajerosEnColaControl: number = 0;
 
     this.cantMaxPasajeros = 0;
 
@@ -134,7 +117,7 @@ export class SimuladorColasAlternativo {
           );
         }
         reloj = Number(Utils.getMenorMayorACero(eventosCandidatos).toFixed(4));
-        tipoEvento = this.getSiguienteEvento(eventosCandidatos, reloj);
+        tipoEvento = this.getSiguienteEvento(eventosCandidatos);
       }
 
       switch (tipoEvento) {
@@ -149,7 +132,7 @@ export class SimuladorColasAlternativo {
         case EventoAlt.LLEGADA_PASAJERO: {
           // Obtenemos el tipo de pasajero.
           rndTipoPasajero = Number(Math.random().toFixed(4));
-          tipoPasajero = this.getTipoPasajero(rndTipoPasajero);
+          tipoPasajero = this.getTipoPasajero(rndTipoPasajero, ["AB", "C"]);
           totalPasajeros ++;
 
           // Generamos la llegada del próximo pasajero.
@@ -221,9 +204,7 @@ export class SimuladorColasAlternativo {
 
         // Fin de facturación-venta de un pasajero atendido por el empleado 1.
         case EventoAlt.FIN_FACTURACION_VENTA_EMP_1: {
-          rndVentaFacturacion = null;
-          tiempoVentaFacturacion = null;
-          finVentaFacturacionEmp1 = null;
+          finVentaFacturacionEmp1 = -1;
           // Se genera el tiempo que tardará el pasajero atendido en pasar a la zona de control de metales.
           rndPaseEntreVentaFacturacionYControl = Number(Math.random().toFixed(4));
           tiempoPaseEntreVentaFacturacionYControl = Number(this.getTiempoPasoEntreZonas(rndPaseEntreVentaFacturacionYControl).toFixed(4));
@@ -252,9 +233,7 @@ export class SimuladorColasAlternativo {
 
         // Fin de facturación-venta de un pasajero atendido por el empleado 2.
         case EventoAlt.FIN_FACTURACION_VENTA_EMP_2: {
-          rndVentaFacturacion = null;
-          tiempoVentaFacturacion = null;
-          finVentaFacturacionEmp2 = null;
+          finVentaFacturacionEmp2 = -1;
           // Se genera el tiempo que tardará el pasajero atendido en pasar a la zona de control de metales.
           rndPaseEntreVentaFacturacionYControl = Number(Math.random().toFixed(4));
           tiempoPaseEntreVentaFacturacionYControl = Number(this.getTiempoPasoEntreZonas(rndPaseEntreVentaFacturacionYControl).toFixed(4));
@@ -283,10 +262,7 @@ export class SimuladorColasAlternativo {
 
         // Fin de chequeo de billete a un pasajero.
         case EventoAlt.FIN_CHEQUEO_BILLETE: {
-          rnd1ChequeoBillete = null;
-          rnd2ChequeoBillete = null;
-          tiempoChequeoBillete = null;
-          finChequeoBillete = null;
+          finChequeoBillete = -1;
           // Se genera el tiempo que tardará el pasajero atendido en pasar a la zona de control de metales.
           rndPaseEntreChequeoYControl = Number(Math.random().toFixed(4));
           tiempoPaseEntreChequeoYControl = Number(this.getTiempoPasoEntreZonas(rndPaseEntreChequeoYControl).toFixed(4));
@@ -315,9 +291,7 @@ export class SimuladorColasAlternativo {
 
         // Fin de control de metales a un pasajero.
         case EventoAlt.FIN_CONTROL_METALES: {
-          rndControlMetales = null;
-          tiempoControlMetales = null;
-          finControlMetales = null;
+          finControlMetales = -1;
           // Se genera el tiempo que tardará el pasajero atendido en pasar a la zona de embarque.
           rndPaseEntreControlYEmbarque = Number(Math.random().toFixed(4));
           tiempoPaseEntreControlYEmbarque = Number(this.getTiempoPasoEntreZonas(rndPaseEntreControlYEmbarque).toFixed(4));
@@ -333,7 +307,6 @@ export class SimuladorColasAlternativo {
             minutoTiempoOciosoEmpControlDesde = reloj;
           }
           else {
-            totalPasajerosEnColaControl++;
             // El servidor pasa de ocupado a ocupado.
             empleadoControlMetales.ocupado();
             // Quitamos a un pasajero de la cola y cambiamos su estado.
@@ -347,9 +320,7 @@ export class SimuladorColasAlternativo {
 
         // Fin de paso entre zonas de un pasajero.
         case EventoAlt.FIN_PASO_ENTRE_VENTA_FACTURACION_Y_CONTROL: {
-          rndPaseEntreVentaFacturacionYControl = null;
-          tiempoPaseEntreVentaFacturacionYControl = null;
-          finPaseEntreVentaFacturacionYControl = null;
+          finPaseEntreVentaFacturacionYControl = -1;
           // Buscamos el pasajero que llegó a la zona de control y le cambiamos el estado. Antes, preguntamos por el servidor.
           let pasajero: PasajeroAlt = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.PASANDO_DE_VENTA_FACTURACION_A_CONTROL && pasajero.minutoLlegadaDeVentaFacturacionAControl === reloj);
           pasajero.minutoLlegadaDeVentaFacturacionAControl = null;
@@ -373,9 +344,7 @@ export class SimuladorColasAlternativo {
 
         // Fin de paso entre zonas de un pasajero.
         case EventoAlt.FIN_PASO_ENTRE_CHEQUEO_Y_CONTROL: {
-          rndPaseEntreChequeoYControl = null;
-          tiempoPaseEntreChequeoYControl = null;
-          finPaseEntreChequeoYControl = null;
+          finPaseEntreChequeoYControl = -1;
           // Buscamos el pasajero que llegó a la zona de control y le cambiamos el estado. Antes, preguntamos por el servidor.
           let pasajero: PasajeroAlt = pasajerosEnSistema.find(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.PASANDO_DE_CHEQUEO_BILLETE_A_CONTROL && pasajero.minutoLlegadaDeChequeoBilleteAControl === reloj);
           pasajero.minutoLlegadaDeChequeoBilleteAControl = null;
@@ -398,9 +367,7 @@ export class SimuladorColasAlternativo {
 
         // Fin de paso entre zonas de un pasajero.
         case EventoAlt.FIN_PASO_ENTRE_CONTROL_Y_EMBARQUE: {
-          rndPaseEntreControlYEmbarque = null;
-          tiempoPaseEntreControlYEmbarque = null;
-          finPaseEntreControlYEmbarque = null;
+          finPaseEntreControlYEmbarque = -1;
           // Buscamos el pasajero que llegó a embarque y lo eliminamos del sistema.
           let indicePasajero: number = pasajerosEnSistema.findIndex(pasajero => pasajero.getEstado() === EstadoPasajeroAlt.PASANDO_DE_CONTROL_A_EMBARQUE && pasajero.minutoLlegadaDeControlAEmbarque === reloj);
           let pasajeroFinalizado: PasajeroAlt = pasajerosEnSistema[indicePasajero];
@@ -423,84 +390,87 @@ export class SimuladorColasAlternativo {
 
       // Comparamos la cantidad de pasajeros en todas las colas en la iteración actual.
       cantMaxPasajerosEnAlgunaCola = Math.max(
-        Math.max(
         colaVentaFacturacion.length,
         colaVentaFacturacion.length,
         colaChequeoBillete.length,
-        colaControlMetales.length
-        ),
+        colaControlMetales.length,
         cantMaxPasajerosEnAlgunaCola
+      );
+
+      cantMaxPasajerosEnColaControl = Math.max(
+        colaControlMetales.length,
+        cantMaxPasajerosEnColaControl
       );
 
       // Cargamos la matriz de estado a mostrar solo para el rango pasado por parámetro.
       if ((i >= eventoDesde && i <= indiceHasta) || i == cantEventos-1) {
         evento.push(
-          i,
+          i.toString(),
           EventoAlt[tipoEvento],
-          reloj,
+          reloj.toFixed(4),
   
-          rndLlegada,
-          tiempoEntreLlegadas,
-          proximaLlegada,
-          rndTipoPasajero,
+          rndLlegada.toFixed(4),
+          tiempoEntreLlegadas.toFixed(4),
+          proximaLlegada.toFixed(4),
+          rndTipoPasajero.toFixed(4),
           tipoPasajero,
   
-          rndVentaFacturacion,
-          tiempoVentaFacturacion,
-          finVentaFacturacionEmp1,
-          finVentaFacturacionEmp2,
+          rndVentaFacturacion.toFixed(4),
+          tiempoVentaFacturacion.toFixed(4),
+          finVentaFacturacionEmp1.toFixed(4),
+          finVentaFacturacionEmp2.toFixed(4),
   
-          rnd1ChequeoBillete,
-          rnd2ChequeoBillete,
-          tiempoChequeoBillete,
-          finChequeoBillete,
+          rnd1ChequeoBillete.toFixed(4),
+          rnd2ChequeoBillete.toFixed(4),
+          tiempoChequeoBillete.toFixed(4),
+          finChequeoBillete.toFixed(4),
   
-          rndControlMetales,
-          tiempoControlMetales,
-          finControlMetales,
+          rndControlMetales.toFixed(4),
+          tiempoControlMetales.toFixed(4),
+          finControlMetales.toFixed(4),
   
-          rndPaseEntreVentaFacturacionYControl,
-          tiempoPaseEntreVentaFacturacionYControl,
-          finPaseEntreVentaFacturacionYControl,
+          rndPaseEntreVentaFacturacionYControl.toFixed(4),
+          tiempoPaseEntreVentaFacturacionYControl.toFixed(4),
+          finPaseEntreVentaFacturacionYControl.toFixed(4),
   
-          rndPaseEntreChequeoYControl,
-          tiempoPaseEntreChequeoYControl,
-          finPaseEntreChequeoYControl,
+          rndPaseEntreChequeoYControl.toFixed(4),
+          tiempoPaseEntreChequeoYControl.toFixed(4),
+          finPaseEntreChequeoYControl.toFixed(4),
   
-          rndPaseEntreControlYEmbarque,
-          tiempoPaseEntreControlYEmbarque,
-          finPaseEntreControlYEmbarque,
+          rndPaseEntreControlYEmbarque.toFixed(4),
+          tiempoPaseEntreControlYEmbarque.toFixed(4),
+          finPaseEntreControlYEmbarque.toFixed(4),
   
           empleado1VentaFacturacion.getEstado(),
           empleado2VentaFacturacion.getEstado(),
-          colaVentaFacturacion.length,
+          colaVentaFacturacion.length.toString(),
   
           empleadoChequeoBillete.getEstado(),
-          colaChequeoBillete.length,
+          colaChequeoBillete.length.toString(),
   
           empleadoControlMetales.getEstado(),
-          colaControlMetales.length,
+          colaControlMetales.length.toString(),
   
-          totalPasajerosA,
-          totalPasajerosB,
-          totalPasajerosC,
-          totalPasajeros,
-          Number(acuTiempoPasajeros.toFixed(4)),
-          Number(acuTiempoOciosoEmpControl.toFixed(4)),
-          cantPasajerosAtentidosPorVentaFacturacion,
-          cantMaxPasajerosEnAlgunaCola,
-          totalPasajerosEnColaControl
+          totalPasajerosA.toString(),
+          totalPasajerosB.toString(),
+          totalPasajerosC.toString(),
+          totalPasajeros.toString(),
+          acuTiempoPasajeros.toFixed(4),
+          acuTiempoOciosoEmpControl.toFixed(4),
+          cantPasajerosAtentidosPorVentaFacturacion.toString(),
+          cantMaxPasajerosEnAlgunaCola.toString(),
+          cantMaxPasajerosEnColaControl.toString()
         );
   
         for (let i: number = 0; i < pasajerosEnSistema.length; i++) {
           evento.push(
-            pasajerosEnSistema[i].getId(),
+            pasajerosEnSistema[i].getId().toString(),
             pasajerosEnSistema[i].getTipoPasajero(),
             EstadoPasajeroAlt[pasajerosEnSistema[i].getEstado()],
-            pasajerosEnSistema[i].getMinutoLlegada(),
-            pasajerosEnSistema[i].minutoLlegadaDeVentaFacturacionAControl,
-            pasajerosEnSistema[i].minutoLlegadaDeChequeoBilleteAControl,
-            pasajerosEnSistema[i].minutoLlegadaDeControlAEmbarque,
+            pasajerosEnSistema[i].getMinutoLlegada().toFixed(4),
+            pasajerosEnSistema[i].minutoLlegadaDeVentaFacturacionAControl.toFixed(4),
+            pasajerosEnSistema[i].minutoLlegadaDeChequeoBilleteAControl.toFixed(4),
+            pasajerosEnSistema[i].minutoLlegadaDeControlAEmbarque.toFixed(4),
             );
         }
 
@@ -521,13 +491,13 @@ export class SimuladorColasAlternativo {
     return this.matrizEstado;
   }
 
-  public getSiguienteEvento(tiemposEventos: number[], relojActual: number): EventoAlt {
+  public getSiguienteEvento(tiemposEventos: number[]): EventoAlt {
     let menor: number = Utils.getMenorMayorACero(tiemposEventos);
     for (let i: number = 0; i < tiemposEventos.length; i++) {
       if (tiemposEventos[i] === menor) {
         if (i < 5)
           return EventoAlt[EventoAlt[i+1]];
-        if (tiemposEventos[i] >= relojActual) {
+        else {
           switch (i % 3) {
             case 0: {
               return EventoAlt.FIN_PASO_ENTRE_CHEQUEO_Y_CONTROL;
@@ -546,50 +516,13 @@ export class SimuladorColasAlternativo {
     return -1;
   }
 
-  // Cálculo del tiempo entre llegadas, que tiene distribución exponencial.
-  public getTiempoEntreLlegadas(rndLlegada: number): number {
-    let tiempo: number = -this.mediaTiempoEntreLlegadas * Math.log(1 - rndLlegada);
-    return tiempo;
-  }
-
-  // Obtención del tipo de pasajero según la probabilidad asociada.
-  public getTipoPasajero(probTipoPasajero: number): string {
-    const tipos: string[] = ["AB", "C"];
-    for (let i: number = 0; i < this.probTiposPasajeros.length; i++) {
-      if (probTipoPasajero < this.probTiposPasajeros[i])
-        return tipos[i];
-    }
-  }
-
   // Cálculo del tiempo de venta-facturación.
   public getTiempoVentaFacturacion(rndTiempoVentaFacturacion: number): number {
     let tiempo: number;
     if (rndTiempoVentaFacturacion < 0.5)
       tiempo = this.aTiempoFacturacion + rndTiempoVentaFacturacion * (this.bTiempoFacturacion - this.aTiempoFacturacion);
     else
-      tiempo = -this.mediaTiempoVentaBilletes * Math.log(1 - rndTiempoVentaFacturacion);
+      tiempo = this.getDistribucionExponencial(rndTiempoVentaFacturacion, this.mediaTiempoVentaBilletes);
     return tiempo;
-  }
-
-  // Cálculo del tiempo de chequeo de billete, que tiene distribución normal.
-  public getTiempoChequeoBillete(rndTiempoChequeo1: number, rndTiempoChequeo2: number): number {
-    let tiempo: number = (Math.sqrt(-2 * Math.log(rndTiempoChequeo1)) * Math.cos(2 * Math.PI * rndTiempoChequeo2)) * this.desviacionTiempoChequeoBilletes + this.mediaTiempoChequeoBilletes;
-    return Math.abs(tiempo);
-  }
-
-  // Cálculo del tiempo de chequeo de billete, que tiene distribución exponencial.
-  public getTiempoControlMetales(rndTiempoControl: number): number {
-    let tiempo: number = -this.mediaTiempoControlMetales * Math.log(1 - rndTiempoControl);
-    return tiempo;
-  }
-
-  // Cálculo del tiempo de paso entre zonas, que tiene distribución exponencial.
-  public getTiempoPasoEntreZonas(rndPasoZonas: number): number {
-    let tiempo: number = -this.mediaTiempoPasoEntreZonas * Math.log(1 - rndPasoZonas);
-    return tiempo;
-  }
-
-  public getCantMaxPasajerosEnSistema(): number {
-    return this.cantMaxPasajeros;
   }
 }

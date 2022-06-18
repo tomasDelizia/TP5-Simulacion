@@ -44,8 +44,8 @@ HTMLUtils.ocultarSeccion(divTablaSimulacion);
 HTMLUtils.ocultarSeccion(divTablaSimulacionAlternativa);
 
 // Disparamos la simulación.
-btnSimular.addEventListener('click', async () => {
-  await simular();
+btnSimular.addEventListener('click', () => {
+  simular();
 });
 
 const simular = async () => {
@@ -65,7 +65,7 @@ const simular = async () => {
       // Realizamos la simulación alternativa.
       startTime = performance.now();
       simulador = new SimuladorColasAlternativo();
-      await simulador.simular(n, eventoDesde);
+      simulador.simular(n, eventoDesde);
       console.log(`La simulación tardó ${performance.now() - startTime} milisegundos`);
 
       matrizEstado = simulador.getMatrizEstado();
@@ -90,7 +90,7 @@ const simular = async () => {
       // Realizamos la simulación.
       startTime = performance.now();
       simulador = new SimuladorColas();
-      await simulador.simular(n, eventoDesde);
+      simulador.simular(n, eventoDesde);
       console.log(`La simulación tardó ${performance.now() - startTime} milisegundos`);
 
       matrizEstado = simulador.getMatrizEstado();
