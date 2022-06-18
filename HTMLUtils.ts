@@ -11,7 +11,7 @@ export module HTMLUtils {
   }
 
   // Función que elimina todas las filas de la tabla HTML excepto los encabezados.
-  export function limpiarTabla(tabla: HTMLTableElement, cantEncabezados: number, cantSubEncabezados: number) {
+  export function limpiarTablaSimulacion(tabla: HTMLTableElement, cantEncabezados: number, cantSubEncabezados: number) {
     for (let i: number = tabla.rows.length; i > 2; i--)
       tabla.deleteRow(i - 1);
  
@@ -24,7 +24,7 @@ export module HTMLUtils {
   }
 
   // Crea una fila a una tabla html a partir de un vector pasado por parámetro.
-  export function crearFila(fila: any[], indicesColor: number[]): string {
+  export function crearFilaTablaSimulacion(fila: string[], indicesColor: number[]): string {
     let filaHTML: string = "<tr>";
     for (let i: number = 0; i < fila.length; i++) {
       let celdaHTML: string = "<td";
@@ -33,8 +33,8 @@ export module HTMLUtils {
           celdaHTML += ' style="color: red"';
       }
       celdaHTML += ">";
-      const valor: string = !(typeof fila[i] === 'undefined' || String(fila[i]) == 'null' || fila[i] === '') ? String(fila[i]) : '-';
-      celdaHTML += valor + "</td>";
+      const valorCelda: string = !(typeof fila[i] === 'undefined' || fila[i] == 'null' || fila[i] === '-1.0000' || fila[i] === '') ? fila[i] : '-';
+      celdaHTML += valorCelda + "</td>";
       filaHTML += celdaHTML;
     }
     filaHTML += "</tr>"
@@ -42,11 +42,11 @@ export module HTMLUtils {
   }
 
   // Carga de tabla html.
-  export function llenarTabla(matriz: any[][], indicesColor: number[], tabla: HTMLTableElement): void {
+  export function llenarTablaSimulacion(matriz: any[][], indicesColor: number[], tabla: HTMLTableElement): void {
     tabla.hidden = true;
     let bodyTabla: string = "";
     for (let i: number = 0; i < matriz.length; i++) {
-      let filaHTML: string = crearFila(matriz[i], indicesColor);
+      let filaHTML: string = crearFilaTablaSimulacion(matriz[i], indicesColor);
       bodyTabla += filaHTML;
     }
     tabla.tBodies[0].innerHTML = bodyTabla;
