@@ -37,6 +37,9 @@ export class PasajeroAlt {
     this.id = id;
     this.tipoPasajero = tipoPasajero;
     this.minutoLlegada = minutoLlegada;
+    this._minutoLlegadaDeVentaFacturacionAControl = -1;
+    this._minutoLlegadaDeChequeoBilleteAControl = -1;
+    this._minutoLlegadaDeControlAEmbarque = -1;
   }
 
   public enVentaFacturacionEquipajeEmp1(): void {
